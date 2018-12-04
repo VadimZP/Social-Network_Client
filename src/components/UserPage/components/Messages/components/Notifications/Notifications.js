@@ -5,7 +5,8 @@ import openSocket from 'socket.io-client'
 import './Notifications.css'
 import { acceptFriendshipRequested, rejectFriendshipRequested, getUserNotificationsRequested } from 'redux/modules/messages'
 
-const socket = openSocket('http://192.168.1.100:8000')
+// const socket = openSocket('http://192.168.1.100:8000')
+const socket = openSocket(`https://social-network-client.herokuapp.com`)
 
 class Notifications extends Component {
   state = {
