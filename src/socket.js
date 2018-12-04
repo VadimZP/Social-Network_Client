@@ -1,9 +1,13 @@
 const app = require('express')()
 const http = require('http').Server(app)
 const io = require('socket.io')(http)
+const path = require('path')
+
 const port = process.env.PORT || 8080
 
-app.get('/', (req, res) => res.send('Hello World!'))
+app.use(express.static(path.join(__dirname, '../public')))
+
+app.get('/', (req, res) => res.sendFile(__dirname + './index.html'))
 
 io.on('connection', socket => {
     socket.on('appendMessage', message => {
