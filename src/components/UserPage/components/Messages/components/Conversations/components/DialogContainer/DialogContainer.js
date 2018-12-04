@@ -9,7 +9,8 @@ import moment from 'moment'
 import { sendMessageRequested } from 'redux/modules/messages'
 import Dialog from '../Dialog/Dialog'
 
-const socket = openSocket('http://192.168.1.100:8000')
+// const port = process.env.PORT || 8080
+const socket = openSocket(`https://social-network-client.herokuapp.com`)
 
 class DialogContainer extends Component {
   static propTypes = {
