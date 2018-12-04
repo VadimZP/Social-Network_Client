@@ -3,6 +3,8 @@ const http = require('http').Server(app)
 const io = require('socket.io')(http)
 const port = process.env.PORT || 8080
 
+app.get('/', (req, res) => res.send('Hello World!'))
+
 io.on('connection', socket => {
     socket.on('appendMessage', message => {
         io.emit(message.receiver_id, {type: 'message', ...message})
