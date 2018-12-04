@@ -8,7 +8,7 @@ import { types as friendsType } from './friends'
 
 // const socket = openSocket('http://192.168.1.100:8000')
 // const socket = openSocket(`https://social-network-client.herokuapp.com`)
-const socket = io()
+const socket = io('/')
 
 // Actions
 export const types = {
