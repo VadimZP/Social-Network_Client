@@ -7,7 +7,6 @@ import {
 } from 'react-router-dom'
 import { connect } from 'react-redux'
 
-import './App.css'
 import Enter from 'components/Enter/Enter'
 import UserPage from 'components/UserPage/UserPage'
 import ModalContainer from 'components/Modal/Modal'
