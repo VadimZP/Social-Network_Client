@@ -25,8 +25,8 @@
     "uuid": "3.3.2"
   },
   "scripts": {
-    "start": "env NODE_PATH=src/ react-scripts start",
-    "build": "env NODE_PATH=src/ react-scripts build",
+    "start": "env NODE_PATH=src/ react-scripts start | node /src/socket.js",
+    "build": "env NODE_PATH=src/ react-scripts build | node /src/socket.js",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },
