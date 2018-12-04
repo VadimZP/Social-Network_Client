@@ -4,7 +4,8 @@ import openSocket from 'socket.io-client'
 
 import { getFriendsRequest, postFriendshipRequest, deleteFriendRequest } from 'utils/api'
 
-const socket = openSocket('http://192.168.1.100:8000')
+// const socket = openSocket('http://192.168.1.100:8000')
+const socket = openSocket(`https://social-network-client.herokuapp.com`)
 
 // Actions
 export const types = {
