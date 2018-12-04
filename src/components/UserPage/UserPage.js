@@ -16,7 +16,8 @@ import Settings from './components/Settings/Settings'
 import Friends from './components/Friends/Friends'
 import Messages from './components/Messages/Messages'
 
-const socket = openSocket('http://192.168.1.100:8000')
+// const socket = openSocket('http://192.168.1.100:8000')
+const socket = openSocket(`https://social-network-client.herokuapp.com`)
 
 class UserPage extends Component {
   state = {
