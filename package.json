@@ -17,10 +17,10 @@
     "react-scripts": "1.1.4",
     "redux": "^4.0.0",
     "redux-immutable": "^4.0.0",
-    "redux-localstorage": "^0.4.1",
     "redux-saga": "^0.16.0",
     "redux-thunk": "^2.3.0",
-    "redux-wait-for-action": "0.0.8",
+    "express": "^4.15.2",
+    "socket.io": "^2.1.1",
     "socket.io-client": "^2.1.1",
     "uuid": "3.3.2"
   },
