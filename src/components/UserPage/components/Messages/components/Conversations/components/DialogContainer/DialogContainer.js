@@ -2,7 +2,8 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import ImmutablePropTypes from 'react-immutable-proptypes'
 import { connect } from 'react-redux'
-import openSocket from 'socket.io-client'
+// import openSocket from 'socket.io-client'
+import io from 'socket.io-client'
 import uuid from 'uuid'
 import moment from 'moment'
 
@@ -10,7 +11,8 @@ import { sendMessageRequested } from 'redux/modules/messages'
 import Dialog from '../Dialog/Dialog'
 
 // const port = process.env.PORT || 8080
-const socket = openSocket(`https://social-network-client.herokuapp.com`)
+// const socket = openSocket(`https://social-network-client.herokuapp.com`)
+const socket = io()
 
 class DialogContainer extends Component {
   static propTypes = {
