@@ -3,8 +3,6 @@ import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 
-import './Person.css'
-
 function Person({user, userEmail, children }) {
   const {
     name,
