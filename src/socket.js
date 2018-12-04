@@ -10,6 +10,7 @@ app.use(express.static(path.join(__dirname, '../public')))
 app.get('/', (req, res) => res.sendFile(__dirname + './index.html'))
 
 io.on('connection', socket => {
+    console.log('Kek')
     socket.on('appendMessage', message => {
         io.emit(message.receiver_id, {type: 'message', ...message})
         io.emit(message.sender_id, {type: 'message', ...message})
