@@ -12,7 +12,7 @@ import Dialog from '../Dialog/Dialog'
 
 // const port = process.env.PORT || 8080
 // const socket = openSocket(`https://social-network-client.herokuapp.com`)
-const socket = io()
+const socket = io('/')
 
 class DialogContainer extends Component {
   static propTypes = {
