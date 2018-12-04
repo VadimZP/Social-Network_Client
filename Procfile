@@ -1,1 +1,1 @@
-web: node ./src/socket.js
+web: node src/socket.js
