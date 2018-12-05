@@ -76,7 +76,8 @@ export default function friends(state = initialState, action) {
     case types.REMOVE_FRIEND_REQUESTED:
       return state.filter(item => item.get('id') != action.friendId)
     case types.REMOVE_FRIEND_SUCCEED:
-      return fromJS([...action.friends])
+      // return fromJS([...action.friends])
+      return state
     case types.REMOVE_FRIEND_FAILED:
       return state
     default:
@@ -109,9 +110,9 @@ export function* postFriendship(action) {
 export function* deleteFriend(action) {
   try {
     const result = yield call(deleteFriendRequest, action.friendId, action.userId)
-    const response = yield result.json()
+    // const response = yield result.json()
 
-    yield put(removeFriendSucceed(response[0]))
+    yield put(removeFriendSucceed(/* response[0] */))
   } catch (error) {
     yield put(removeFriendFailed())
   }
