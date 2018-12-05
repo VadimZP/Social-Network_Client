@@ -5,7 +5,6 @@ import { Switch, Route } from 'react-router'
 import { connect } from 'react-redux'
 import io from 'socket.io-client'
 
-import { getUsersRequested } from 'redux/modules/users'
 import { getFriendsRequested } from 'redux/modules/friends'
 import { getUserNotificationsRequested } from 'redux/modules/messages'
 
@@ -25,11 +24,10 @@ class UserPage extends Component {
   }
 
   componentDidMount() {
-    const { userId, getUserNotificationsRequested, getFriendsRequested, getUsersRequested } = this.props
+    const { userId, getUserNotificationsRequested, getFriendsRequested } = this.props
 
     getUserNotificationsRequested(userId)
     getFriendsRequested(userId)
-    getUsersRequested(userId, 0, 4)
 
     socket.on(
       userId,
@@ -133,7 +131,6 @@ const mapStateToProps = state => {
 export default connect(
   mapStateToProps,
   {
-    getUsersRequested,
     getUserNotificationsRequested,
     getFriendsRequested
   }
