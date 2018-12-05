@@ -69,7 +69,7 @@ class Friends extends Component {
     getFriendsRequested(userData.get('id'))
 
     if (!users.size) {
-      getUsersRequested(userData.get('id'), 0, 4)
+      getUsersRequested(userData.get('id'), users.size, 4)
     }
   }
 

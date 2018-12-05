@@ -3,7 +3,7 @@ import { NavLink, Redirect } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import { Switch, Route } from 'react-router'
 import { connect } from 'react-redux'
-import openSocket from 'socket.io-client'
+import io from 'socket.io-client'
 
 import { getUsersRequested } from 'redux/modules/users'
 import { getFriendsRequested } from 'redux/modules/friends'
@@ -16,8 +16,7 @@ import Settings from './components/Settings/Settings'
 import Friends from './components/Friends/Friends'
 import Messages from './components/Messages/Messages'
 
-// const socket = openSocket('http://192.168.1.100:8000')
-const socket = openSocket(`https://social-network-client.herokuapp.com`)
+const socket = io('/')
 
 class UserPage extends Component {
   state = {
@@ -26,10 +25,11 @@ class UserPage extends Component {
   }
 
   componentDidMount() {
-    const { userId, getUserNotificationsRequested, getFriendsRequested } = this.props
+    const { userId, getUserNotificationsRequested, getFriendsRequested, getUsersRequested } = this.props
 
     getUserNotificationsRequested(userId)
     getFriendsRequested(userId)
+    getUsersRequested(userId, 0, 4)
 
     socket.on(
       userId,
