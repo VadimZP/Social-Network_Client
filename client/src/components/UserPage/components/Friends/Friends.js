@@ -56,6 +56,16 @@ class Friends extends Component {
     return null
   }
 
+  componentDidUpdate(prevProps) {
+    const { userData, getUsersRequested, users } = this.props
+
+    if(prevProps.users.equals(this.props.users)) {
+     if (!users.size) {
+        getUsersRequested(userData.get('id'), users.size, 4)
+      }
+    }
+  }
+
   componentDidMount() {
     const {
       userData,
@@ -67,10 +77,6 @@ class Friends extends Component {
 
     getLastUserRequested(userData.get('id'))
     getFriendsRequested(userData.get('id'))
-
-    if (!users.size) {
-      getUsersRequested(userData.get('id'), users.size, 4)
-    }
   }
 
   handleScroll = e => {
