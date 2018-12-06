@@ -66,9 +66,12 @@ class DialogContainer extends Component {
     )
   }
 
-  componentDidUpdate(prevProps) {
-    if(prevProps.interlocutorId !== this.props.interlocutorId) {
-      this.setState({obj: {}})
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.interlocutorId !== this.props.interlocutorId) {
+      this.setState({obj: {}, notFriend: false})
+    }
+    if (this.state.obj !== prevState.obj) {
+      this.dialogContainerEl.scrollTop = this.dialogContainerEl.scrollHeight
     }
   }
 
@@ -82,7 +85,9 @@ class DialogContainer extends Component {
     const { message } = this.state
     const currentDate = moment().format('YYYY-MM-DD HH:mm:ss')
 
-    if(!friends.toJS().find(user => user.id === interlocutorId)) {
+    this.setState({ message: '' })
+
+    if (!friends.toJS().find(user => user.id === interlocutorId)) {
       this.setState({ notFriend: 'This user is not your friend' })
       return
     }
@@ -97,7 +102,7 @@ class DialogContainer extends Component {
       <div
         className="dialog-container"
         id={interlocutorId}
-        ref={elem => (this.dialogContainerEl = elem)}
+        ref={elem => { this.dialogContainerEl = elem }}
       >
         {children}
         {obj[interlocutorId]}
@@ -106,11 +111,24 @@ class DialogContainer extends Component {
           <button
             type="button"
             className="btn-submit-message"
-            onClick={this.sendMessage}
+            onClick={e => {
+              this.sendMessage()
+              this.textBox.innerText = ''
+            }}
           >
             Send
           </button>
           <div
+            role="textbox"
+            ref={elem => { this.textBox = elem }}
+            tabIndex={0}
+            onKeyDown={e => {
+              if (e.keyCode === 13) {
+                e.preventDefault()
+                this.sendMessage()
+                this.textBox.innerText = ''
+              }
+            }}
             contentEditable
             style={{
               padding: '15px',
