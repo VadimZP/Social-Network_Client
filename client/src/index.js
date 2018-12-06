@@ -11,20 +11,15 @@ import configuredStore from './redux/configuredStore'
 
 const store = configuredStore()
 
-function render() {
-  ReactDOM.render(
-    <Provider store={store}>
-      <Router>
-        <Route path="/" component={App} />
-      </Router>
-    </Provider>,
-    document.getElementById('root')
-  )
-}
-
-render()
+ReactDOM.render(
+  <Provider store={store}>
+    <Router>
+      <Route path="/" component={App} />
+    </Router>
+  </Provider>,
+  document.getElementById('root')
+)
 
 store.subscribe(() => saveState(store.getState()))
-store.subscribe(() => render())
 
 registerServiceWorker()
