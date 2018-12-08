@@ -65,4 +65,4 @@ export const sendMsgRequest = (receiver_id, id, name, surname, avatar, date, mes
 
 export const changeSettingsRequest = userData => new Http().put('settings', { headers, body: JSON.stringify({ ...userData }) })
 
-export const uploadAvatarRequest = formData => new Http().post('settings/avatar', { body: formData })
+export const uploadAvatarRequest = formData => new Http().post('settings/avatar', { 'x-goog-project-id': '235017222678', body: formData })
