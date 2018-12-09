@@ -64,5 +64,5 @@ export const sendMsgRequest = (receiver_id, id, name, surname, avatar, date, mes
 
 
 export const changeSettingsRequest = userData => new Http().put('settings', { headers, body: JSON.stringify({ ...userData }) })
-// , { body: formData }
-export const uploadAvatarRequest = formData => new Http().post('settings/avatar')
+
+export const uploadAvatarRequest = formData => new Http().post('settings/avatar', { body: formData })
