@@ -1,0 +1,104 @@
+body {
+  background-color: #f1f3f5;
+}
+
+.button {
+  min-width: 130px;
+  border: none;
+  border-radius: 3px;
+  background: #474f56;
+  color: #fff;
+  font-weight: bold;
+  cursor: pointer;
+  -webkit-box-shadow: 0 0 2px rgb(194, 194, 194);
+  box-shadow: 0 0 2px rgb(194, 194, 194);
+  text-transform: uppercase;
+  font-size: 15px;
+  padding: 10px;
+}
+
+.page-wrapper {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  width: 1400px;
+  margin: 50px auto;
+}
+
+.navigation {
+  border-radius: 5px;
+  position: absolute;
+  left: 64px;
+  background: #fff;
+  height: 600px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0.335);
+  transition: all 0.3s;
+}
+
+.navigation:hover {
+  transform: translateX(-54%);
+}
+
+.navigation > ul {
+  padding: 0;
+}
+
+.nav-link .listItem {
+    list-style: none;
+    position: relative;
+    width: 100%;
+    color: inherit;
+    padding: 20px;
+}
+
+.navigation > ul .nav-link .fontello-icon {
+  font-size: 25px;
+  margin-right: 20px;
+  color: #6C6C6C;
+}
+
+.content-container {
+  -webkit-display: flex;
+  -moz-display: flex;
+  -ms-display: flex;
+  -o-display: flex;
+  display: flex;
+  flex-direction: column;
+  -ms-flex-direction: column;
+  z-index: 5;
+  margin: 0 auto;
+  width: 80%;
+  height: 600px;
+  background: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-bottom-left-radius: 0;
+  border-top-left-radius: 0;
+  border-left: 0;
+  border-top-right-radius: 5px;;
+  border-right: 5px;;
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0.335);
+}
+
+.navigation .btn-submit-logout {
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  cursor: pointer;
+  font-size: 25px;
+  color: #6C6C6C;
+  width: 100%;
+  padding: 20px 25px;
+  margin-right: 20px;
+}
+
+.message-counter {
+  position: absolute;
+  font-size: 12px;
+  left: 10px;
+  background: #b2b2b2;
+  color: #000;
+  border-radius: 50%;
+  padding: 1px 5px;
+  box-shadow: 0 0 3px #384f68;
+}
