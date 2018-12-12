@@ -2,6 +2,17 @@ import React, { Component, Fragment } from 'react'
 import { NavLink, Redirect } from 'react-router-dom'
 import { Switch, Route } from 'react-router'
 import { connect } from 'react-redux'
+import Button from '@material-ui/core/Button'
+import Tabs from '@material-ui/core/Tabs'
+import Tab from '@material-ui/core/Tab'
+import TextField from '@material-ui/core/TextField'
+// import Icon from '@material-ui/icons/Icon'
+import InputBase from '@material-ui/core/InputBase';
+import { fade } from '@material-ui/core/styles/colorManipulator';
+import SearchIcon from '@material-ui/icons/Search';
+import DeleteIcon from '@material-ui/icons/Delete'
+import SendIcon from '@material-ui/icons/Send'
+import { withStyles } from '@material-ui/core/styles'
 import PropTypes from 'prop-types'
 
 import { getUserMsgsRequested } from 'redux/modules/messages'
@@ -10,9 +21,21 @@ import './Messages.css'
 import Conversations from './components/Conversations/Conversations'
 import Notifications from './components/Notifications/Notifications'
 
+const styles = theme => ({
+  root: {
+    flexGrow: 1,
+    backgroundColor: theme.palette.background.paper,
+  },
+  tabsRoot: {
+    borderBottom: '1px solid #e8e8e8',
+    overflow: 'initial'
+  },
+})
+
 class Messages extends Component {
   state = {
-    dialogContent: []
+    dialogContent: [],
+    value: 0,
   }
 
   componentDidMount() {
@@ -53,8 +76,12 @@ class Messages extends Component {
     }))
   }
 
+  handleChange = (event, value) => {
+    this.setState({ value })
+  }
+
   render() {
-    const { match, location } = this.props
+    const { match, location, history, classes } = this.props
 
     const {
       fullMessageHistory,
@@ -80,24 +107,24 @@ class Messages extends Component {
 
     return (
       <Fragment>
-        <nav className="navbar">
-          <ul>
-            <NavLink
-              className="nav-link"
-              to={`${match.url}/conversations`}
+          <Tabs
+              value={this.state.value}
+              indicatorColor="primary"
+              textColor="primary"
+              onChange={this.handleChange}
+              classes={{ root: classes.tabsRoot }}
             >
-              Conversations
-            </NavLink>
-            <NavLink
-              className="nav-link"
-              to={`${match.url}/notifications`}
-              onClick={this.props.onClick}
-              >
-             Notifications
-            </NavLink>
-          </ul>
-        </nav>
-    
+              <Tab label="Conversations"
+                onClick={() => {
+                  history.push(`${match.url}/conversations`)
+                  this.props.onClick
+                }} />
+              <Tab label="Notifications"
+                onClick={() => {
+                  history.push(`${match.url}/notifications`)
+                  this.props.onClick
+                }} />
+            </Tabs>
         <div className="flex-container">
           <Switch>
             <Route path={`${match.url}/notifications`} component={Notifications} />
@@ -123,6 +150,8 @@ class Messages extends Component {
   }
 }
 
+const customizedMessages = withStyles(styles)(Messages)
+
 const mapStateToProps = state => ({
   userData: state.getIn(['global', 'userData']),
   conversations: state.getIn(['messages', 'conversations']),
@@ -135,4 +164,4 @@ export default connect(
     getUserMsgsRequested,
     getUsersRequested
   }
-)(Messages)
+)(customizedMessages)

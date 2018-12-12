@@ -8,20 +8,23 @@
 
 .conversations {
     overflow: auto;
-    width: 30%;
+    min-width: 30%;
     border-right: 1px solid rgb(226, 226, 226);
     height: 100%;
 }
 
-.conversations > li{
+.letter {
+    width: 100%;
     padding: 15px 20px;
     position: relative;
     display: flex;
     align-items: center;
     cursor: pointer;
+    box-shadow: 0px 1px 2px #e8e8e8;
+    outline: none;
 }
 
-.conversations > li::after{
+/* .conversations > li::after{
     content: '';
     display: block;
     width: 100%;
@@ -30,13 +33,14 @@
     position: absolute;
     bottom: 0;
     left: 0;
-}
+} */
 
 .conversations .user {
-    font-weight: bold;   
+    font-weight: 500;
+    color: #000;
 }
 
-.conversations .letter-date {
+.letter-date {
     position: absolute;
     font-size: 12px;
     color: #71767b;
@@ -47,37 +51,38 @@
     border-radius: 3px;
 }
 
-.conversations .avatar{
+.letter .avatar{
     max-width: 60px;
     max-height: 60px;
     z-index: 10;
 }
 
-.conversations .letter-text {
+.letter-text {
     position: relative;
+    /* font-weight: 100; */
     right: 25px;
     font-size: 15px;
+    color: rgba(0, 0, 0, 0.75);
 }
 
 .dialog-container {
     overflow: auto;
     width: 70%;
     padding-top: 10px;
+    margin-bottom: 45px;
 }
 
 .dialog-message {
     padding: 10px 20px;
     position: relative;
-}
-
-.dialog-message:last-of-type{
-    margin-bottom: 60px;
+    color: rgba(0, 0, 0, 0.75);
 }
 
 .dialog-user{
-    font-weight: bold;
+    font-weight: 500;
     position: relative;
     top: -1px;
+    color: #000;
 }
 
 .dialog-date{

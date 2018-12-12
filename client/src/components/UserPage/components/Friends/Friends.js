@@ -12,6 +12,9 @@ import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
 import TextField from '@material-ui/core/TextField'
 // import Icon from '@material-ui/icons/Icon'
+import InputBase from '@material-ui/core/InputBase';
+import { fade } from '@material-ui/core/styles/colorManipulator';
+import SearchIcon from '@material-ui/icons/Search';
 import DeleteIcon from '@material-ui/icons/Delete'
 import SendIcon from '@material-ui/icons/Send'
 import { withStyles } from '@material-ui/core/styles'
@@ -33,11 +36,55 @@ const styles = theme => ({
   },
   tabsRoot: {
     borderBottom: '1px solid #e8e8e8',
+    overflow: 'initial'
+  },
+  search: {
+    position: 'relative',
+    borderRadius: theme.shape.borderRadius,
+    backgroundColor: 'rgba(0, 0, 0, 0.05)',
+    '&:hover': {
+      backgroundColor: 'rgba(0, 0, 0, 0.03)',
+    },
+    marginTop: 20,
+    marginRight: 20,
+    width: '100%',
+    [theme.breakpoints.up('sm')]: {
+      marginLeft: 20,
+      width: 'auto',
+    },
+  },
+  searchIcon: {
+    width: theme.spacing.unit * 9,
+    height: '100%',
+    position: 'absolute',
+    pointerEvents: 'none',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    color: 'rgba(0, 0, 0, 0.20)',
+  },
+  inputRoot: {
+    color: 'inherit',
+    width: '100%',
+  },
+  inputInput: {
+    paddingTop: theme.spacing.unit,
+    paddingRight: theme.spacing.unit,
+    paddingBottom: theme.spacing.unit,
+    paddingLeft: theme.spacing.unit * 10,
+    width: '100%'
   },
   rightIcon: {
     marginLeft: theme.spacing.unit,
-    width: 20,
-    height: 20,
+    width: 18,
+    height: 18,
+    // color: theme.palette.secondary.main
+  },
+  sendIcon: {
+    marginLeft: theme.spacing.unit,
+    width: 18,
+    height: 18,
+    // color: theme.primary
   }
 })
 
@@ -138,6 +185,7 @@ class Friends extends Component {
       openModal,
       removeFriendRequested,
       sendMessageRequested,
+      history,
       classes
     } = this.props
 
@@ -160,19 +208,23 @@ class Friends extends Component {
             <Button
               type="button"
               className="button"
+              variant="contained"
               onClick={() => openModal(sendMessageRequested.bind(null, user.id, id, name, surname, avatar, moment().format('YYYY-MM-DD HH:mm:ss')
               ), true, 'Send')}
             >
               Message
-              <SendIcon className={classes.rightIcon} />
+              <SendIcon color="primary" classes={{
+                root: classes.sendIcon
+                }} />
             </Button>
             <Button 
               type="button"
               className="button"
+              variant="contained"
               onClick={() => openModal(removeFriendRequested.bind(null, user.id, id))}
             >
               Remove
-              <DeleteIcon className={classes.rightIcon} /> 
+              <DeleteIcon color="secondary" className={classes.rightIcon} /> 
             </Button>
           </Person>
         )
@@ -185,13 +237,14 @@ class Friends extends Component {
       return (
         <Person user={user} key={user.id}>
           {!friends.toJS().find(friend => friend.id === user.id) ? (
-            <button
+            <Button 
               type="button"
               className="button"
+              variant="contained"
               onClick={() => openModal(sendFriendshipRequested.bind(null, id, user.id, avatar, `${name} ${surname} wants to be your friend`))}
             >
-              Add to your friends
-            </button>
+              Add to friends
+            </Button> 
           ) : <h2 className="your-friend">Your friend</h2>}
         </Person>
       )
@@ -203,7 +256,6 @@ class Friends extends Component {
 
     return (
       <Fragment>
-        {/* <nav className="navbar"> */}
             <Tabs
               value={this.state.value}
               indicatorColor="primary"
@@ -213,32 +265,40 @@ class Friends extends Component {
             >
               <Tab label="Friends"
                 onClick={() => {
-                  this.props.history.push(`${match.url}/comrades`)
+                  history.push(`${match.url}/comrades`)
                   localStorage.setItem('searchUser', '')
                   fetchUserRequested(localStorage.getItem('searchUser'))
                 }} />
               <Tab label="People"
                 onClick={() => {
-                  this.props.history.push(`${match.url}/users`)
+                  history.push(`${match.url}/users`)
                   localStorage.setItem('searchUser', '')
                   fetchUserRequested(localStorage.getItem('searchUser'))
                 }} />
             </Tabs>
-        {/* </nav> */}
         <Switch>
           <Route path={`${match.url}/comrades`}
             render={() => (
               <Fragment>
-                {/* <div className="input-wrapper"> */}
-                  <TextField
-                    id="standard-full-width"
-                    style={{ margin: 8, minHeight: 40 }}
-                    placeholder="Find someone"
-                    margin="normal"
-                    InputLabelProps={{
-                      shrink: true,
+                <div className={classes.search}>
+                  <div className={classes.searchIcon}>
+                    <SearchIcon />
+                  </div>
+                  <InputBase
+                  className="search-input"
+                    id="friends-search"
+                    placeholder="Search…"
+                    defaultValue={localStorage.getItem('searchUser')}
+                    onChange={(e) => {
+                      localStorage.setItem('searchUser', e.target.value.trim());
+                      fetchUserRequested(localStorage.getItem('searchUser'))
+                    }}
+                    classes={{
+                      root: classes.inputRoot,
+                      input: classes.inputInput,
                     }}
                   />
+                </div>
                 {/*   <input
                     type="search"
                     className="search-input"
@@ -259,15 +319,25 @@ class Friends extends Component {
             path={`${match.url}/users`}
             render={() => (
               <Fragment>
-                <TextField
-                  id="standard-full-width"
-                  style={{ margin: 8, minHeight: 40 }}
-                  placeholder="Find someone"
-                  margin="normal"
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                />
+                <div className={classes.search}>
+                  <div className={classes.searchIcon}>
+                    <SearchIcon />
+                  </div>
+                  <InputBase
+                  id="users-search"
+                    placeholder="Search…"
+                    defaultValue={localStorage.getItem('searchUser')}
+                    className="search-input"
+                    onChange={(e) => {
+                      localStorage.setItem('searchUser', e.target.value.trim())
+                      fetchUserRequested(localStorage.getItem('searchUser'))
+                    }}
+                    classes={{
+                      root: classes.inputRoot,
+                      input: classes.inputInput,
+                    }}
+                  />
+                </div>
                 {/* <input
                   type="search"
                   className="search-input"

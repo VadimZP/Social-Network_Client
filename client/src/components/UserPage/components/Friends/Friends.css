@@ -18,14 +18,6 @@
     overflow: auto;
 }
 
-.search-input {
-    /* width: 100%; */
-    /* padding: 10px 10px 10px 20px; */
-    font-size: 20px;
-    border: none;
-    border-bottom: 1px solid rgb(226, 226, 226);
-}
-
 .person {
     display: flex;
     padding: 20px;
@@ -56,7 +48,7 @@
 .person .button {
     text-transform: initial;
     font-weight: normal;
-    font-size: 16px;
+    font-size: 15px;
 }
 
 .your-friend {
