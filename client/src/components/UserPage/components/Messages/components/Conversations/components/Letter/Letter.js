@@ -16,8 +16,8 @@ export default function Letter({ letter, ...props }) {
   } = props
 
   let msgText =
-    text.length - text.slice(0, 30).length ? 
-      (msgText = `${text.slice(0, 30)}...`) :
+    text.length - text.slice(0, 20).length ? 
+      (msgText = `${text.slice(0, 20)}...`) :
       (msgText = text)
       
   const avatarBg = interlocutorAvatar && interlocutorAvatar[0] === '#' ?

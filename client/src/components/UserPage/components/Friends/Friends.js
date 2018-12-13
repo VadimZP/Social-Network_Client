@@ -33,9 +33,20 @@ const styles = theme => ({
     flexGrow: 1,
     backgroundColor: theme.palette.background.paper,
   },
+  flexContainer: {
+    minHeight: 'inherit'
+  },
   tabsRoot: {
     borderBottom: '1px solid #e8e8e8',
-    overflow: 'initial'
+    overflow: 'initial',
+    minHeight: 65,
+  },
+  tabsIndicator: {
+    backgroundColor: '#34495E',
+    height: 4,
+  },
+  tabRoot: {
+    minHeight: 65,
   },
   search: {
     position: 'relative',
@@ -77,13 +88,6 @@ const styles = theme => ({
     marginLeft: theme.spacing.unit,
     width: 18,
     height: 18,
-    // color: theme.palette.secondary.main
-  },
-  sendIcon: {
-    marginLeft: theme.spacing.unit,
-    width: 18,
-    height: 18,
-    // color: theme.primary
   }
 })
 
@@ -255,18 +259,16 @@ class Friends extends Component {
       <Fragment>
             <Tabs
               value={this.state.value}
-              indicatorColor="primary"
-              textColor="primary"
               onChange={this.handleChange}
-              classes={{ root: classes.tabsRoot }}
+              classes={{ root: classes.tabsRoot, indicator: classes.tabsIndicator, flexContainer: classes.flexContainer }}
             >
-              <Tab label="Friends"
+              <Tab label="Friends" className={classes.tabRoot}
                 onClick={() => {
                   history.push(`${match.url}/comrades`)
                   localStorage.setItem('searchUser', '')
                   fetchUserRequested(localStorage.getItem('searchUser'))
                 }} />
-              <Tab label="People"
+              <Tab label="People" className={classes.tabRoot}
                 onClick={() => {
                   history.push(`${match.url}/users`)
                   localStorage.setItem('searchUser', '')

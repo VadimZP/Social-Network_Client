@@ -19,6 +19,7 @@
     cursor: pointer;
     outline: none;
     box-shadow: 0 0 35px #dedede;
+    border-left: 2px solid #dadada;
     border-bottom: 2px solid #dadada;
     margin: 20px;
     border-radius: 8px;
@@ -31,24 +32,23 @@
 
 .letter-date {
     position: absolute;
-    font-size: 12px;
-    color: #71767b;
-    right: 7px;
-    bottom: 7px;
+    font-size: 11px;
+    color: #71767C;
+    right: 10px;
+    bottom: 9px;
     background: #F1F3F5;
     padding: 4px 7px;
     border-radius: 3px;
 }
 
 .letter .avatar{
-    max-width: 60px;
-    max-height: 60px;
+    max-width: 45px;
+    max-height: 45px;
     z-index: 10;
 }
 
 .letter-text {
     position: relative;
-    /* font-weight: 100; */
     right: 25px;
     font-size: 15px;
     color: rgba(0, 0, 0, 0.75);
@@ -65,7 +65,7 @@
     background: rgba(244, 244, 244, 0.5);
     border-radius: 5px;
     margin: 20px 20px;
-    padding: 10px 20px;
+    padding: 15px;
     position: relative;
     margin-bottom: 15px;
     color: rgba(0, 0, 0, 0.75);
@@ -80,8 +80,9 @@
 
 .dialog-date{
     position: absolute;
-    right: 20px;
-    font-size: 12px;
+    top: 10px;
+    right: 10px;
+    font-size: 11px;
     color: #AEB6BE;
 }
 

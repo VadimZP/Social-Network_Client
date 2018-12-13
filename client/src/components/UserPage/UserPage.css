@@ -22,7 +22,7 @@ body {
   display: flex;
   justify-content: space-between;
   width: 1400px;
-  margin: 50px auto;
+  margin: 0 auto;
 }
 
 .navigation {
@@ -30,7 +30,7 @@ body {
   position: absolute;
   left: 64px;
   background: #34495e;
-  height: 600px;
+  height: 500px;
   border: 1px solid rgba(0, 0, 0, 0.08);
   box-shadow: 0 0 1px rgba(0, 0, 0, 0.335);
   transition: all 0.3s;
@@ -95,7 +95,7 @@ body {
   z-index: 5;
   margin: 0 auto;
   width: 80%;
-  height: 600px;
+  height: 830px;
   background: #fff;
   border: 1px solid rgba(0, 0, 0, 0.08);
   border-bottom-left-radius: 0;
