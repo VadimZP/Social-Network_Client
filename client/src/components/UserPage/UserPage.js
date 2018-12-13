@@ -68,49 +68,45 @@ class UserPage extends Component {
       <div className="page-wrapper">
         <aside className="navigation">
           <ul>
-            <NavLink className="nav-link" to={`${match.url}/home`}>
+            <NavLink className="nav-link" activeClassName="active-link" to={`${match.url}/home`}>
               <ListItem className="listItem" style={{borderTopLeftRadius: 5}} button>
                 <div className="the-icons span3">
                   <i className="fontello-icon icon-home" />
                 </div>
-                <ListItemText primary="Home" />
+                <ListItemText className="list-item-text" primary="Home" />
               </ListItem>
             </NavLink>
-            <Divider light />
-            <NavLink className="nav-link" to={`${match.url}/messages`} onClick={() => this.setState({ unreadMessage: 0 }, () => localStorage.setItem('messageCounter', 0))}>
+            <NavLink className="nav-link" activeClassName="active-link" to={`${match.url}/messages`} onClick={() => this.setState({ unreadMessage: 0 }, () => localStorage.setItem('messageCounter', 0))}>
               <ListItem className="listItem" button>
                 <div className="the-icons span3">
                   <i className="fontello-icon icon-mail-alt" />
                   {(unreadMessage !== 0 || unreadNotification !== 0) && <span className="message-counter">{unreadMessage + unreadNotification}</span>}
                 </div>
-                <ListItemText primary="Messages" />
+                <ListItemText className="list-item-text" primary="Messages" />
               </ListItem>
             </NavLink>
-            <Divider light />
-            <NavLink className="nav-link" to={`${match.url}/friends`}>
+            <NavLink className="nav-link" activeClassName="active-link" to={`${match.url}/friends`}>
               <ListItem className="listItem" button>
                 <div className="the-icons span3">
                   <i className="fontello-icon icon-users" />
                 </div>
-                <ListItemText primary="Friends" />
+                <ListItemText className="list-item-text" primary="Friends" />
               </ListItem>
             </NavLink>
-            <Divider light />
-            <NavLink className="nav-link" to={`${match.url}/settings`}>
+            <NavLink className="nav-link" activeClassName="active-link"  to={`${match.url}/settings`} activeClassName="active-link">
                <ListItem className="listItem" button>
                <div className="the-icons span3">
                 <i className="fontello-icon icon-cog" />
               </div>
-                <ListItemText primary="Settings" />
+                <ListItemText className="list-item-text" primary="Settings" />
               </ListItem>
             </NavLink>
-            <Divider light />
           </ul>
           <ListItem button className="btn-submit-logout" onClick={this.logOut}>
             <div className="the-icons span3">
               <i className="fontello-icon icon-logout" />
             </div>
-            <ListItemText primary="Log out" />
+            <ListItemText className="list-item-text" primary="Log out" />
           </ListItem>
         </aside>
         <div className="content-container" onScroll={this.handleScroll}>

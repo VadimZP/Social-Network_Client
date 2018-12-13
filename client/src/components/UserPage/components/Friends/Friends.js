@@ -19,7 +19,6 @@ import DeleteIcon from '@material-ui/icons/Delete'
 import SendIcon from '@material-ui/icons/Send'
 import { withStyles } from '@material-ui/core/styles'
 
-
 import { getUsersRequested, getLastUserRequested } from 'redux/modules/users'
 import { fetchUserRequested } from 'redux/modules/global'
 import { openModal } from 'redux/modules/modals'
@@ -213,9 +212,7 @@ class Friends extends Component {
               ), true, 'Send')}
             >
               Message
-              <SendIcon color="primary" classes={{
-                root: classes.sendIcon
-                }} />
+              <SendIcon color="primary" className={classes.rightIcon} />
             </Button>
             <Button 
               type="button"
@@ -299,18 +296,6 @@ class Friends extends Component {
                     }}
                   />
                 </div>
-                {/*   <input
-                    type="search"
-                    className="search-input"
-                    id="friends-search"
-                    placeholder="Find a friend"
-                    defaultValue={localStorage.getItem('searchUser')}
-                    onChange={(e) => {
-                      localStorage.setItem('searchUser', e.target.value.trim());
-                      fetchUserRequested(localStorage.getItem('searchUser'))
-                    }}
-                  /> */}
-                {/* </div> */}
                 <ul className="friends-list">{friendsList}</ul>
               </Fragment>
             )}
@@ -338,17 +323,6 @@ class Friends extends Component {
                     }}
                   />
                 </div>
-                {/* <input
-                  type="search"
-                  className="search-input"
-                  id="users-search"
-                  placeholder="Find someone"
-                  defaultValue={localStorage.getItem('searchUser')}
-                  onChange={(e) => {
-                    localStorage.setItem('searchUser', e.target.value.trim())
-                    fetchUserRequested(localStorage.getItem('searchUser'))
-                  }}
-                /> */}
                 <ul className="users-list" onScroll={this.handleScroll}>{usersList}</ul>
               </Fragment>
             )}

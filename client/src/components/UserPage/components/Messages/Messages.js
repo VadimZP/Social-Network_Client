@@ -30,6 +30,10 @@ const styles = theme => ({
     borderBottom: '1px solid #e8e8e8',
     overflow: 'initial'
   },
+  tabsIndicator: {
+    backgroundColor: '#34495E',
+    height: 4,
+  },
 })
 
 class Messages extends Component {
@@ -109,10 +113,8 @@ class Messages extends Component {
       <Fragment>
           <Tabs
               value={this.state.value}
-              indicatorColor="primary"
-              textColor="primary"
               onChange={this.handleChange}
-              classes={{ root: classes.tabsRoot }}
+              classes={{ root: classes.tabsRoot, indicator: classes.tabsIndicator }}
             >
               <Tab label="Conversations"
                 onClick={() => {

@@ -5,11 +5,22 @@ import { connect } from 'react-redux'
 import io from 'socket.io-client'
 import uuid from 'uuid'
 import moment from 'moment'
+import SendIcon from '@material-ui/icons/Send'
+import { withStyles } from '@material-ui/core/styles'
 
 import { sendMessageRequested } from 'redux/modules/messages'
 import Dialog from '../Dialog/Dialog'
 
 const socket = io('/')
+
+const styles = theme => ({
+ /*  sendIcon: {
+    transition: 'all .3s',
+    '&:hover': {
+      transform: 'scale(1.4) rotate(-140deg)',
+    },
+  }, */
+})
 
 class DialogContainer extends Component {
   static propTypes = {
@@ -95,7 +106,7 @@ class DialogContainer extends Component {
   }
 
   render() {
-    const { children, interlocutorId } = this.props
+    const { children, interlocutorId, classes } = this.props
     const { obj, notFriend } = this.state
 
     return (
@@ -111,12 +122,13 @@ class DialogContainer extends Component {
           <button
             type="button"
             className="btn-submit-message"
+            style={{ cursor: 'pointer' }}
             onClick={e => {
               this.sendMessage()
               this.textBox.innerText = ''
             }}
           >
-            Send
+            <SendIcon color="primary" className="sendIcon"/* {classes.sendIcon} */ />
           </button>
           <div
             role="textbox"
@@ -135,7 +147,7 @@ class DialogContainer extends Component {
               width: '100%',
               background: '#fff',
               textAlign: 'left',
-              borderTop: '1px solid #ADB5BD',
+              borderTop: '1px solid rgba(0, 0, 0, 0.08)',
               outline: 'none'
             }}
             onInput={e => this.writeMessage(e)}
@@ -145,6 +157,8 @@ class DialogContainer extends Component {
     )
   }
 }
+
+const customizedDialogContainer = withStyles(styles)(DialogContainer)
 
 const mapStateToProps = state => ({
   userData: state.getIn(['global', 'userData']),
@@ -156,4 +170,4 @@ export default connect(
   {
     sendMessageRequested
   }
-)(DialogContainer)
+)(customizedDialogContainer)
