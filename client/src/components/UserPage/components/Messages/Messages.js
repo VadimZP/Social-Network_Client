@@ -26,14 +26,21 @@ const styles = theme => ({
     flexGrow: 1,
     backgroundColor: theme.palette.background.paper,
   },
+  flexContainer: {
+    minHeight: 'inherit'
+  },
   tabsRoot: {
     borderBottom: '1px solid #e8e8e8',
-    overflow: 'initial'
+    overflow: 'initial',
+    minHeight: 65,
   },
   tabsIndicator: {
     backgroundColor: '#34495E',
     height: 4,
   },
+  tabRoot: {
+    minHeight: 65,
+  }
 })
 
 class Messages extends Component {
@@ -114,14 +121,14 @@ class Messages extends Component {
           <Tabs
               value={this.state.value}
               onChange={this.handleChange}
-              classes={{ root: classes.tabsRoot, indicator: classes.tabsIndicator }}
+              classes={{ root: classes.tabsRoot, indicator: classes.tabsIndicator, flexContainer: classes.flexContainer }}
             >
-              <Tab label="Conversations"
+              <Tab label="Conversations" className={classes.tabRoot}
                 onClick={() => {
                   history.push(`${match.url}/conversations`)
                   this.props.onClick
                 }} />
-              <Tab label="Notifications"
+              <Tab label="Notifications" className={classes.tabRoot}
                 onClick={() => {
                   history.push(`${match.url}/notifications`)
                   this.props.onClick

@@ -1,4 +1,5 @@
 import React from 'react'
+import ListItem from '@material-ui/core/ListItem';
 
 export default function Letter({ letter, ...props }) {
   const {
@@ -32,17 +33,19 @@ export default function Letter({ letter, ...props }) {
       role="menuitem"
       tabIndex={0}
     >
-      <div
-        className="avatar"
-        style={avatarBg}
-      />
-      <span className="letter-date">{date}</span>
-      <p className="letter-text">
-        <span className="user">
-          {`${sender_name} ${sender_surname}:`}
-        </span>
-        {` ${msgText}`}
-      </p>
+      <ListItem className="listItem" style={{ padding: '15px 20px', borderRadius: 8 }} button>
+        <div
+          className="avatar"
+          style={avatarBg}
+        />
+        <span className="letter-date">{date}</span>
+        <p className="letter-text">
+          <span className="user">
+            {`${sender_name} ${sender_surname}:`}
+          </span>
+          {` ${msgText}`}
+        </p>
+      </ListItem>
     </li>
   )
 }

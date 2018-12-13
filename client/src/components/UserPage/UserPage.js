@@ -4,11 +4,8 @@ import PropTypes from 'prop-types'
 import { Switch, Route } from 'react-router'
 import { connect } from 'react-redux'
 import io from 'socket.io-client'
-import Button from '@material-ui/core/Button';
 import ListItem from '@material-ui/core/ListItem';
-import Divider from '@material-ui/core/Divider';
 import ListItemText from '@material-ui/core/ListItemText';
-
 
 import { getFriendsRequested } from 'redux/modules/friends'
 import { getUserNotificationsRequested } from 'redux/modules/messages'

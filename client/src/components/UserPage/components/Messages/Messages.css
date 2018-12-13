@@ -8,20 +8,20 @@
 
 .conversations {
     overflow: auto;
-    min-width: 30%;
-    border-right: 1px solid rgb(226, 226, 226);
+    min-width: 37%;
     height: 100%;
 }
 
 .letter {
-    width: 100%;
-    padding: 15px 20px;
     position: relative;
     display: flex;
     align-items: center;
     cursor: pointer;
-    border-bottom: 1px solid #e8e8e8;
     outline: none;
+    box-shadow: 0 0 35px #dedede;
+    border-bottom: 2px solid #dadada;
+    margin: 20px;
+    border-radius: 8px;
 }
 
 .conversations .user {
@@ -58,7 +58,7 @@
     overflow: auto;
     width: 70%;
     padding-top: 10px;
-    margin-bottom: 45px;
+    margin-bottom: 75px;
 }
 
 .dialog-message {
@@ -87,17 +87,21 @@
 
 .message-bar {
     width: inherit;
+    background: #fff;
     display: flex;
     position: absolute;
+    border-radius: 10px;
+    box-shadow: 0 0 6px #dddddd;
     bottom: 0;
     right: 0;
+    margin-bottom: 20px;
+    margin-right: 20px;
 }
 
 .btn-submit-message {
     width: 60px;
     border: none;
     background: none;
-    border-top: 1px solid rgba(0, 0, 0, 0.08);
 }
 
 .btn-submit-message .sendIcon {

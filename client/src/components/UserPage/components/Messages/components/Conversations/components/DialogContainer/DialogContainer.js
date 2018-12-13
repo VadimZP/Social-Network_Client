@@ -117,7 +117,7 @@ class DialogContainer extends Component {
       >
         {children}
         {obj[interlocutorId]}
-        {notFriend && <p className="dialog-message" style={{fontWeight: 'bold', color: '#b22c35'}}>{notFriend}</p>}
+        {notFriend && <p className="dialog-message" style={{ fontWeight: 'bold', color: '#b22c35' }}>{notFriend}</p>}
         <div className="message-bar">
           <button
             type="button"
@@ -145,9 +145,7 @@ class DialogContainer extends Component {
             style={{
               padding: '15px',
               width: '100%',
-              background: '#fff',
               textAlign: 'left',
-              borderTop: '1px solid rgba(0, 0, 0, 0.08)',
               outline: 'none'
             }}
             onInput={e => this.writeMessage(e)}

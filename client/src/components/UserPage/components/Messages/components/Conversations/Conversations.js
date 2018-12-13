@@ -33,7 +33,7 @@ function compare(a, b) {
     <Fragment>
       <ul className="conversations">
         {opts.sort(compare).map((item, i) => (
-          <ListItem className="listItem" style={{ padding: 0 }} button>
+          // <ListItem className="listItem" style={{ padding: 0 }} button>
             <Letter
               letter={item.slice(-1)[0]}
               msgId={item[0].receiver_id === userId ? item[0].sender_id : item[0].receiver_id}
@@ -41,7 +41,7 @@ function compare(a, b) {
               getDialogWithId={getDialogWithId}
               key={keys[i]}
             />
-          </ListItem>
+          // </ListItem>
         ))}
       </ul>
       {dialogContent.length ? (
