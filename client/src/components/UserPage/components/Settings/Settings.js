@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+import TextField from '@material-ui/core/TextField'
+import { withStyles, MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import { connect } from 'react-redux'
 
 import './Settings.css'
@@ -6,6 +8,26 @@ import Utils from 'utils/Utils'
 import { changeSettingsRequested, uploadAvatarRequested } from 'redux/modules/global'
 import * as Countries from 'iso-3166-1-alpha-2'
 
+const styles = theme => ({
+  textField: {
+    width: '100%',
+    marginBottom: 20,
+  },
+  cssLabel: {
+    '&$cssFocused': {
+      color: '#34495E',
+    },
+  },
+  cssFocused: {},
+  cssUnderline: {
+    '&:before': {
+      borderBottomColor: '#cdcdcd',
+    },
+    '&:after': {
+      borderBottomColor: '#34495E',
+    },
+  },
+});
 
 class Settings extends Component {
   state = {
@@ -138,6 +160,8 @@ class Settings extends Component {
       passErr
     } = this.state
 
+    const { classes } = this.props
+
     if (!email ||
       (!name || name.length < 2) ||
       (!surname || surname.length < 2)
@@ -167,28 +191,91 @@ class Settings extends Component {
           </div>
         </div>
         <div className="user-data">
-          <div className="input-wrapper">
-            <h3>Name</h3>
-            <input
+          <div className="column item-1">
+              <TextField
+                id="standard-name"
+                label="Name"
+                className={classes.textField}
+                InputLabelProps={{
+                  classes: {
+                    root: classes.cssLabel,
+                    focused: classes.cssFocused,
+                  },
+                }}
+                InputProps={{
+                  classes: {
+                    focused: classes.cssFocused,
+                    underline: classes.cssUnderline,
+                  },
+                }}
+                value={name}
+                onChange={this.nameChange}
+                margin="normal"
+              />
+              {/*   <input
               type="text"
               id="inputName"
               value={name}
               onChange={this.nameChange}
+            /> */}
+          <TextField
+              id="standard-name"
+              label="Surname"
+              className={classes.textField}
+              InputLabelProps={{
+                classes: {
+                  root: classes.cssLabel,
+                  focused: classes.cssFocused,
+                },
+              }}
+              InputProps={{
+                classes: {
+                  focused: classes.cssFocused,
+                  underline: classes.cssUnderline,
+                },
+              }}
+              value={surname}
+              onChange={this.surnameChange}
+              margin="normal"
             />
-          </div>
-          <div className="input-wrapper">
-            <h3>Surame</h3>
+           {/*  <h3>Surame</h3>
             <input
               type="text"
               id="inputSurname"
               value={surname}
               onChange={this.surnameChange}
-            />
-          </div>
-          <div className="input-wrapper">
-            <h3>Email</h3>
+            /> */}
             {emailErr && <p style={{ color: 'red', fontSize: 13, paddingTop: 5 }}>Empty or incorrect input</p>}
-            <input
+            <TextField
+              id="inputEmail"
+              type="email"
+              label="Email"
+              className={classes.textField}
+              InputLabelProps={{
+                classes: {
+                  root: classes.cssLabel,
+                  focused: classes.cssFocused,
+                },
+              }}
+              InputProps={{
+                classes: {
+                  focused: classes.cssFocused,
+                  underline: classes.cssUnderline,
+                },
+              }}
+              value={email}
+              onChange={this.emailChange}
+              onBlur={() => {
+                const emailFormat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
+                if (!email || !email.match(emailFormat)) {
+                  this.setState({ emailErr: true })
+                  return
+                }
+                this.setState({ emailErr: false })
+              }}
+              margin="normal"
+            />
+           {/*  <input
               type="email"
               id="inputEmail"
               value={email}
@@ -201,12 +288,36 @@ class Settings extends Component {
                 }
                 this.setState({ emailErr: false })
               }}
-            />
-          </div>
-          <div className="input-wrapper">
-            <h3>Password</h3>
+            />*/}
             {passErr && <p style={{ color: 'red', fontSize: 13, paddingTop: 5 }}>Empty or too short input</p>}
-            <input
+            <TextField
+              id="inputPassword"
+              label="Password"
+              className={classes.textField}
+              InputLabelProps={{
+                classes: {
+                  root: classes.cssLabel,
+                  focused: classes.cssFocused,
+                },
+              }}
+              InputProps={{
+                classes: {
+                  focused: classes.cssFocused,
+                  underline: classes.cssUnderline,
+                },
+              }}
+              type="password"
+              onChange={this.passwordChange}
+              onBlur={() => {
+                if (!password.length) {
+                  this.setState({ passErr: false })
+                  return
+                }
+                this.setState({ passErr: false })
+              }}
+              margin="normal"
+            />
+            {/*  <input
               type="password"
               id="inputPassword"
               onChange={this.passwordChange}
@@ -217,8 +328,9 @@ class Settings extends Component {
                 }
                 this.setState({ passErr: false })
               }}
-            />
+            /> */}
           </div>
+          <div className="column item-2">
           <div className="select-wrapper">
             <span>Birthday:</span>
             <select
@@ -265,25 +377,26 @@ class Settings extends Component {
                   {item.name}
                 </option>
               ))}
-            </select>
+              </select>
+            </div>
+            <div className="radio-wrapper">
+              <input
+                type="radio"
+                name="gender"
+                value="male"
+                checked={gender === 'male' && true}
+                onChange={this.genderChange}
+              />
+              Male
+            <input
+                type="radio"
+                name="gender"
+                value="female"
+                checked={gender === 'female' && true}
+                onChange={this.genderChange}
+              />
+              Female
           </div>
-          <div className="radio-wrapper">
-            <input
-              type="radio"
-              name="gender"
-              value="male"
-              checked={gender === 'male' && true}
-              onChange={this.genderChange}
-            />
-            Male
-            <input
-              type="radio"
-              name="gender"
-              value="female"
-              checked={gender === 'female' && true}
-              onChange={this.genderChange}
-            />
-            Female
           </div>
         </div>
         <button
@@ -300,6 +413,8 @@ class Settings extends Component {
   }
 }
 
+const customizedSettings = withStyles(styles)(Settings)
+
 const mapStateToProps = state => ({
   userData: state.getIn(['global', 'userData'])
 })
@@ -310,4 +425,4 @@ export default connect(
     changeSettingsRequested,
     uploadAvatarRequested
   }
-)(Settings)
+)(customizedSettings)

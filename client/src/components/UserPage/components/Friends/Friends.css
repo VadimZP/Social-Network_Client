@@ -23,15 +23,18 @@
     padding: 20px;
     align-items: center;
     text-align: center;
-    box-shadow: 0 2px 37px #dbdbdb;
+    box-shadow: 0 1px 12px #cecece;
     margin: 20px;
+    border-bottom: 2px solid #e7e7e7;
     border-radius: 8px;
     background: #fff;
 }
 
 .person:nth-child(even) {
-    background: #2e4051;
+    background: #363647;
     color: #fff;
+    box-shadow: 0 1px 12px #363647;
+    border-bottom: 2px solid #363647;
 }
 
 .person > a {
