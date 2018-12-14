@@ -1,6 +1,11 @@
 import React, { Component } from 'react'
+import Input from '@material-ui/core/Input'
 import TextField from '@material-ui/core/TextField'
-import { withStyles, MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import Select from '@material-ui/core/Select'
+import MenuItem from '@material-ui/core/MenuItem'
+import FormControlLabel from '@material-ui/core/FormControlLabel'
+import Radio from '@material-ui/core/Radio'
+import { withStyles } from '@material-ui/core/styles'
 import { connect } from 'react-redux'
 
 import './Settings.css'
@@ -12,6 +17,10 @@ const styles = theme => ({
   textField: {
     width: '100%',
     marginBottom: 20,
+  },
+  select: {
+    width: '100%',
+    marginBottom: 60
   },
   cssLabel: {
     '&$cssFocused': {
@@ -107,8 +116,9 @@ class Settings extends Component {
 
   countryChange = e => {
     e.persist()
+    const country = Utils.getCountries().find(item => item.alpha2Code === e.target.value)
     this.setState(prevState => ({
-      userData: { ...prevState.userData, country: e.target.options[e.target.selectedIndex].text }
+      userData: { ...prevState.userData, country: country.name }
     }))
   }
 
@@ -212,12 +222,6 @@ class Settings extends Component {
                 onChange={this.nameChange}
                 margin="normal"
               />
-              {/*   <input
-              type="text"
-              id="inputName"
-              value={name}
-              onChange={this.nameChange}
-            /> */}
           <TextField
               id="standard-name"
               label="Surname"
@@ -238,18 +242,12 @@ class Settings extends Component {
               onChange={this.surnameChange}
               margin="normal"
             />
-           {/*  <h3>Surame</h3>
-            <input
-              type="text"
-              id="inputSurname"
-              value={surname}
-              onChange={this.surnameChange}
-            /> */}
             {emailErr && <p style={{ color: 'red', fontSize: 13, paddingTop: 5 }}>Empty or incorrect input</p>}
             <TextField
               id="inputEmail"
               type="email"
               label="Email"
+              autoComplete="new-password"
               className={classes.textField}
               InputLabelProps={{
                 classes: {
@@ -275,20 +273,6 @@ class Settings extends Component {
               }}
               margin="normal"
             />
-           {/*  <input
-              type="email"
-              id="inputEmail"
-              value={email}
-              onChange={this.emailChange}
-              onBlur={() => {
-                const emailFormat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
-                if (!email || !email.match(emailFormat)) {
-                  this.setState({ emailErr: true })
-                  return
-                }
-                this.setState({ emailErr: false })
-              }}
-            />*/}
             {passErr && <p style={{ color: 'red', fontSize: 13, paddingTop: 5 }}>Empty or too short input</p>}
             <TextField
               id="inputPassword"
@@ -317,85 +301,97 @@ class Settings extends Component {
               }}
               margin="normal"
             />
-            {/*  <input
-              type="password"
-              id="inputPassword"
-              onChange={this.passwordChange}
-              onBlur={() => {
-                if (!password.length) {
-                  this.setState({ passErr: false })
-                  return
-                }
-                this.setState({ passErr: false })
-              }}
-            /> */}
           </div>
           <div className="column item-2">
-          <div className="select-wrapper">
-            <span>Birthday:</span>
-            <select
-              name="day"
-              selected={31}
-              onChange={this.birthChange.bind(this, 'day')}
-              defaultValue={birth.day}
-            >
-              {Utils.getDays().map(d => (
-                <option value={d} key={d}>
-                  {d}
-                </option>
-              ))}
-            </select>
-            <select
-              name="month"
-              onChange={this.birthChange.bind(this, 'month')}
-              defaultValue={birth.month}
-            >
-              {Utils.getMonths().map(m => (
-                <option value={m} key={m}>
-                  {m}
-                </option>
-              ))}
-            </select>
-            <select
-              name="years"
-              onChange={this.birthChange.bind(this, 'year')}
-              defaultValue={birth.year}
-            >
-              {Utils.getYears().map(y => (
-                <option value={y} key={y}>
-                  {y}
-                </option>
-              ))}
-            </select>
-            <select
-              name="countries"
-              onChange={this.countryChange}
-              defaultValue={Countries.getCode(country)}
+            <div className="select-wrapper">
+              <Select
+                name="countries"
+                className={classes.select}
+                value={Countries.getCode(country)}
+                onChange={this.countryChange}
+                input={<Input classes={{
+                  focused: classes.cssFocused,
+                  underline: classes.cssUnderline,
+                }} />}
             >
               {Utils.getCountries().map(item => (
-                <option value={item.alpha2Code} key={item.name}>
-                  {item.name}
-                </option>
+                <MenuItem value={item.alpha2Code}>{item.name}</MenuItem>
               ))}
-              </select>
+              </Select>
+              <Select
+                name="day"
+                value={birth.day}
+                style={{width: 'calc(33.3% - 20px)', marginRight: 20}}
+                onChange={this.birthChange.bind(this, 'day')}
+                input={<Input classes={{
+                  focused: classes.cssFocused,
+                  underline: classes.cssUnderline,
+                }} />}
+              >
+                {Utils.getDays().map(d => (
+                  <MenuItem value={d}>{d}</MenuItem>
+                ))}
+              </Select>
+              <Select
+                name="month"
+                value={birth.month}
+                style={{width: 'calc(33.3% - 20px)', marginRight: 20}}
+                onChange={this.birthChange.bind(this, 'month')}
+                input={<Input classes={{
+                  focused: classes.cssFocused,
+                  underline: classes.cssUnderline,
+                }} />}
+              >
+                {Utils.getMonths().map(m => (
+                  <MenuItem value={m}>{m}</MenuItem>
+                ))}
+              </Select>
+              <Select
+                name="years"
+                value={birth.year}
+                style={{width: 'calc(33.3% - 20px)', marginLeft: 20}}
+                onChange={this.birthChange.bind(this, 'year')}
+                input={<Input classes={{
+                  focused: classes.cssFocused,
+                  underline: classes.cssUnderline,
+                }} />}
+              >
+                {Utils.getYears().map(y => (
+                <MenuItem value={y}>{y}</MenuItem>
+              ))}
+            </Select>
             </div>
             <div className="radio-wrapper">
-              <input
+              <FormControlLabel
+                value="male"
+                control={<Radio name="gender" color="primary" checked={gender === 'male' && true}
+                  onChange={this.genderChange} />}
+                label="Male"
+                labelPlacement="start"
+              />
+              {/*   <input
                 type="radio"
                 name="gender"
                 value="male"
                 checked={gender === 'male' && true}
                 onChange={this.genderChange}
               />
-              Male
-            <input
+              Male */}
+              <FormControlLabel
+                value="female"
+                control={<Radio name="gender" color="primary" checked={gender === 'female' && true}
+                  onChange={this.genderChange} />}
+                label="Female"
+                labelPlacement="start"
+              />
+            {/* <input
                 type="radio"
                 name="gender"
                 value="female"
                 checked={gender === 'female' && true}
                 onChange={this.genderChange}
               />
-              Female
+              Female */}
           </div>
           </div>
         </div>

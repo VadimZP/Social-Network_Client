@@ -265,7 +265,7 @@ export default class Utils {
     const years = []
     let currentYear = new Date().getFullYear()
 
-    while (currentYear > 1800) {
+    while (currentYear > 1920) {
       years.push(currentYear--)
     }
 
