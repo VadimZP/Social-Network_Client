@@ -39,7 +39,7 @@
 }
 
 .column.item-2{
-    padding: 30px 20px 0 10px;
+    padding: 40px 20px 0 10px;
 }
 
 .user-data input {
@@ -52,16 +52,56 @@
     font-family: 'Roboto', sans-serif;
 }
 
-.user-data .radio-wrapper {
+.user-data .gender-radio-wrapper {
     height: 20px;
+    position: relative;
 }
 
-.user-data .radio-wrapper input{
+.user-data .gender-radio-wrapper input{
     width: auto;
     height: auto;
 }
 
+.user-data .gender-pseudo-label {
+    color: rgba(0, 0, 0, 0.54);
+    padding: 0;
+    font-size: 12px;
+    line-height: 1;
+    position: absolute;
+    left: 0;
+    top: -20px;
+}
+
 .user-data .select-wrapper {
+    margin-bottom: 60px;
+}
+
+.user-data .birth-select-wrapper {
+    position: relative;
+}
+
+.user-data .birth-pseudo-label {
+    color: rgba(0, 0, 0, 0.54);
+    padding: 0;
+    font-size: 12px;
+    line-height: 1;
+    position: absolute;
+    left: 0;
+    top: -20px;
+}
+
+.user-data .location-select-wrapper {
+    position: relative;
+}
+
+.user-data .location-pseudo-label {
+    color: rgba(0, 0, 0, 0.54);
+    padding: 0;
+    font-size: 12px;
+    line-height: 1;
+    position: absolute;
+    left: 0;
+    top: -20px;
 }
 
 .user-data .input-wrapper {
@@ -75,8 +115,7 @@
 }
 
 .btn-submit-settings {
-    position: absolute;
-    bottom: 20px;
+    top: 120px;
     left: 50%;
     transform: translateX(-50%);
     display: block;
@@ -89,10 +128,4 @@
     cursor: pointer;
     font-size: 18px;
     box-shadow: 0 0 2px rgb(194, 194, 194);
-}
-
-.btn-submit-settings:hover {
-    background: rgb(90, 88, 88);
-    color: #fff;
-    transition: 200ms;
 }

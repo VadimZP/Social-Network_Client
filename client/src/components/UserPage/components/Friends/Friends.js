@@ -284,7 +284,7 @@ class Friends extends Component {
                     <SearchIcon />
                   </div>
                   <InputBase
-                  className="search-input"
+                    className="search-input"
                     id="friends-search"
                     placeholder="Search…"
                     defaultValue={localStorage.getItem('searchUser')}

@@ -5,6 +5,7 @@ import Select from '@material-ui/core/Select'
 import MenuItem from '@material-ui/core/MenuItem'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
 import Radio from '@material-ui/core/Radio'
+import Button from '@material-ui/core/Button'
 import { withStyles } from '@material-ui/core/styles'
 import { connect } from 'react-redux'
 
@@ -36,6 +37,12 @@ const styles = theme => ({
       borderBottomColor: '#34495E',
     },
   },
+  cssRadio: {
+    color: '#34495E',
+    '&$checked': {
+      color: '#34495E',
+    },
+  }
 });
 
 class Settings extends Component {
@@ -304,49 +311,54 @@ class Settings extends Component {
           </div>
           <div className="column item-2">
             <div className="select-wrapper">
-              <Select
-                name="countries"
-                className={classes.select}
-                value={Countries.getCode(country)}
-                onChange={this.countryChange}
-                input={<Input classes={{
-                  focused: classes.cssFocused,
-                  underline: classes.cssUnderline,
-                }} />}
-            >
-              {Utils.getCountries().map(item => (
-                <MenuItem value={item.alpha2Code}>{item.name}</MenuItem>
-              ))}
-              </Select>
-              <Select
-                name="day"
-                value={birth.day}
-                style={{width: 'calc(33.3% - 20px)', marginRight: 20}}
-                onChange={this.birthChange.bind(this, 'day')}
-                input={<Input classes={{
-                  focused: classes.cssFocused,
-                  underline: classes.cssUnderline,
-                }} />}
-              >
-                {Utils.getDays().map(d => (
-                  <MenuItem value={d}>{d}</MenuItem>
-                ))}
-              </Select>
-              <Select
-                name="month"
-                value={birth.month}
-                style={{width: 'calc(33.3% - 20px)', marginRight: 20}}
-                onChange={this.birthChange.bind(this, 'month')}
-                input={<Input classes={{
-                  focused: classes.cssFocused,
-                  underline: classes.cssUnderline,
-                }} />}
-              >
-                {Utils.getMonths().map(m => (
-                  <MenuItem value={m}>{m}</MenuItem>
-                ))}
-              </Select>
-              <Select
+              <div className="location-select-wrapper">
+                <span class="location-pseudo-label">Location</span>
+                <Select
+                  name="countries"
+                  className={classes.select}
+                  value={Countries.getCode(country)}
+                  onChange={this.countryChange}
+                  input={<Input classes={{
+                    focused: classes.cssFocused,
+                    underline: classes.cssUnderline,
+                  }} />}
+                >
+                  {Utils.getCountries().map(item => (
+                    <MenuItem value={item.alpha2Code}>{item.name}</MenuItem>
+                  ))}
+                </Select>
+              </div>
+              <div className="birth-select-wrapper">
+                <span class="birth-pseudo-label">Birth</span>
+                <Select
+                  name="day"
+                  value={birth.day}
+                  style={{ width: 'calc(33.3% - 20px)', marginRight: 20 }}
+                  onChange={this.birthChange.bind(this, 'day')}
+                  input={<Input classes={{
+                    focused: classes.cssFocused,
+                    underline: classes.cssUnderline,
+                  }} />}
+                >
+                  {Utils.getDays().map(d => (
+                    <MenuItem value={d}>{d}</MenuItem>
+                  ))}
+                </Select>
+                <Select
+                  name="month"
+                  value={birth.month}
+                  style={{ width: 'calc(33.3% - 20px)', marginRight: 20 }}
+                  onChange={this.birthChange.bind(this, 'month')}
+                  input={<Input classes={{
+                    focused: classes.cssFocused,
+                    underline: classes.cssUnderline,
+                  }} />}
+                >
+                  {Utils.getMonths().map(m => (
+                    <MenuItem value={m}>{m}</MenuItem>
+                  ))}
+                </Select>
+                <Select
                 name="years"
                 value={birth.year}
                 style={{width: 'calc(33.3% - 20px)', marginLeft: 20}}
@@ -356,54 +368,59 @@ class Settings extends Component {
                   underline: classes.cssUnderline,
                 }} />}
               >
-                {Utils.getYears().map(y => (
-                <MenuItem value={y}>{y}</MenuItem>
-              ))}
-            </Select>
+                  {Utils.getYears().map(y => (
+                    <MenuItem value={y}>{y}</MenuItem>
+                  ))}
+                </Select>
+              </div>
             </div>
-            <div className="radio-wrapper">
+            <div className="gender-radio-wrapper">
+            <span class="gender-pseudo-label">Gender</span>
               <FormControlLabel
                 value="male"
-                control={<Radio name="gender" color="primary" checked={gender === 'male' && true}
-                  onChange={this.genderChange} />}
+                style={{ margin: 0 }}
+                control={
+                  <Radio
+                    name="gender"
+                    checked={gender === 'male' && true}
+                    onChange={this.genderChange}
+                    color="default"
+                    classes={{
+                      root: classes.cssRadio,
+                    }}
+                  />
+                }
                 label="Male"
                 labelPlacement="start"
               />
-              {/*   <input
-                type="radio"
-                name="gender"
-                value="male"
-                checked={gender === 'male' && true}
-                onChange={this.genderChange}
-              />
-              Male */}
               <FormControlLabel
                 value="female"
-                control={<Radio name="gender" color="primary" checked={gender === 'female' && true}
-                  onChange={this.genderChange} />}
+                control={
+                <Radio 
+                  name="gender"
+                  color="default"
+                  checked={gender === 'female' && true}
+                  onChange={this.genderChange} 
+                  classes={{
+                    root: classes.cssRadio,
+                  }}
+                />}
                 label="Female"
                 labelPlacement="start"
               />
-            {/* <input
-                type="radio"
-                name="gender"
-                value="female"
-                checked={gender === 'female' && true}
-                onChange={this.genderChange}
-              />
-              Female */}
-          </div>
+            </div>
           </div>
         </div>
-        <button
+        <Button
           type="button"
+          variant="contained"
           className="btn-submit-settings"
           style={isDisabled ? { background: '#f1f1f1' } : {}}
           onClick={this.submitSettingsChanges}
           disabled={isDisabled}
         >
           Save changes
-        </button>
+        </Button>
       </div>
     )
   }

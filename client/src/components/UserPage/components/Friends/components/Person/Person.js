@@ -10,7 +10,8 @@ function Person({user, userEmail, children }) {
     email,
     birth,
     avatar,
-    gender
+    gender,
+    country
   } = user
   const avatarBg = avatar && avatar[0] === '#' ?
     { backgroundColor: avatar } :
@@ -26,7 +27,8 @@ function Person({user, userEmail, children }) {
           email,
           birth,
           avatar,
-          gender
+          gender,
+          country
         }
       }}
       >
