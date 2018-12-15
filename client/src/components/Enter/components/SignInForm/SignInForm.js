@@ -1,10 +1,37 @@
 import React, { Component } from 'react'
+import TextField from '@material-ui/core/TextField'
+import Button from '@material-ui/core/Button'
 import PropTypes from 'prop-types'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
+import { withStyles } from '@material-ui/core/styles'
 
 import './SignInForm.css'
 import { userSignInRequested } from 'redux/modules/global'
+
+const styles = theme => ({
+  textField: {
+    width: '100%',
+  },
+  select: {
+    width: '100%',
+    marginBottom: 40
+  },
+  cssLabel: {
+    '&$cssFocused': {
+      color: '#34495E',
+    },
+  },
+  cssFocused: {},
+  cssUnderline: {
+    '&:before': {
+      borderBottomColor: '#cdcdcd',
+    },
+    '&:after': {
+      borderBottomColor: '#34495E',
+    },
+  },
+})
 
 class SignInForm extends Component {
   static propTypes = {
@@ -40,7 +67,7 @@ class SignInForm extends Component {
       passErr
     } = this.state
 
-    const { isLogged } = this.props
+    const { isLogged, classes } = this.props
 
     if (!email || (!password || password.length < 6)) {
       isDisabled = true
@@ -51,52 +78,72 @@ class SignInForm extends Component {
 
     return (
       <form className="form-sign-in">
-        <label htmlFor="inputEmail" className="sr-only">
-          Email address
-        </label>
-        {emailErr && <p style={{ color: 'red', fontSize: 13, paddingTop: 5 }}>Empty or incorrect input</p>}
-        <input
-          type="email"
-          id="inputEmail"
-          value={email}
-          onChange={this.emailChange}
-          onBlur={() => {
-            const emailFormat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
-            if (!email || !email.match(emailFormat)) {
-              this.setState({ emailErr: true })
-              return
-            }
-            this.setState({ emailErr: false })
-          }}
-          required
-        />
-        <label htmlFor="inputPassword" className="sr-only">
-          Password
-        </label>
-        {passErr && <p style={{ color: 'red', fontSize: 13, paddingTop: 5 }}>Empty or too short input</p>}
-        <input
-          type="password"
-          id="inputPassword"
-          value={password}
-          onChange={this.passwordChange}
-          onBlur={() => {
-            if (password.length < 6) {
-              this.setState({ passErr: true })
-              return
-            }
-            this.setState({ passErr: false })
-          }}
-          required
-        />
-        <button
-          className="btn-submit-form"
+        <TextField
+              error={emailErr}
+              label={emailErr ? "Empty or incorrect email" : "Email"}
+              type="email"
+              autoComplete="new-password"
+              className={classes.textField}
+              InputLabelProps={{
+                classes: {
+                  root: classes.cssLabel,
+                  focused: classes.cssFocused,
+                },
+              }}
+              InputProps={{
+                classes: {
+                  focused: classes.cssFocused,
+                  underline: classes.cssUnderline,
+                },
+              }}
+              value={email}
+              onChange={this.emailChange}
+              onBlur={() => {
+                const emailFormat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
+                if (!email || !email.match(emailFormat)) {
+                  this.setState({ emailErr: true })
+                  return
+                }
+                this.setState({ emailErr: false })
+              }}
+              margin="normal"
+            />
+          <TextField
+              error={passErr}
+              label={passErr ? "Empty or too short password" : "Password"}
+              className={classes.textField}
+              InputLabelProps={{
+                classes: {
+                  root: classes.cssLabel,
+                  focused: classes.cssFocused,
+                },
+              }}
+              InputProps={{
+                classes: {
+                  focused: classes.cssFocused,
+                  underline: classes.cssUnderline,
+                },
+              }}
+              type="password"
+              onChange={this.passwordChange}
+              onBlur={() => {
+                if (password.length < 6) {
+                  this.setState({ passErr: true })
+                  return
+                }
+                this.setState({ passErr: false })
+              }}
+              margin="normal"
+            />
+        <Button
+          variant="contained"
           type="button"
-          style={isDisabled ? { background: '#f1f1f1' } : {}}
+          style={{ width: 150, margin: '40px auto 0' }}
           onClick={this.signIn}
           disabled={isDisabled}
         >
           Sign In
-        </button>
+        </Button>
         {isLogged === false && <h2 style={{ textAlign: 'center', marginTop: 50 }}>Incorrect username or password.</h2>}
       </form>
     )
@@ -106,6 +153,8 @@ class SignInForm extends Component {
 SignInForm.defaultProps = {
   isLogged: null
 }
+
+const customizedSignInForm = withStyles(styles)(SignInForm)
 
 const mapStateAppToProps = state => ({
   isLogged: state.getIn(['global', 'isLogged'])
@@ -117,5 +166,5 @@ export default withRouter(
     {
       userSignInRequested
     }
-  )(SignInForm)
+  )(customizedSignInForm)
 )

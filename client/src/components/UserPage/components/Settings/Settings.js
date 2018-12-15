@@ -11,8 +11,9 @@ import { connect } from 'react-redux'
 
 import './Settings.css'
 import Utils from 'utils/Utils'
-import { changeSettingsRequested, uploadAvatarRequested } from 'redux/modules/global'
 import * as Countries from 'iso-3166-1-alpha-2'
+import { changeSettingsRequested, uploadAvatarRequested } from 'redux/modules/global'
+
 
 const styles = theme => ({
   textField: {
@@ -43,7 +44,7 @@ const styles = theme => ({
       color: '#34495E',
     },
   }
-});
+})
 
 class Settings extends Component {
   state = {

@@ -15,9 +15,10 @@
   justify-content: center;
   display: flex;
   height: inherit;
-  background: #f1f3f5;
-  box-shadow: 0 0 3px #adb5bd;
-  border: 1px solid #adb5bd;
+  background: #fff;
+  border-radius: 5px;
+    z-index: 10;
+    box-shadow: 0px 3px 5px -1px rgba(0, 0, 0, 0.2), 0px 5px 8px 0px rgba(0, 0, 0, 0.14), 0px 1px 14px 0px rgba(0, 0, 0, 0.12);
 }
 
 .modal {
@@ -30,21 +31,22 @@
 
 .text {
   margin: 35px 0;
-  font-size: 20px;
+  font-size: 18px;
 }
 
 .buttons {
   justify-content: space-around;
   display: flex;
-  margin: 10px 0;
+  margin: 20px 0 35px 0;
 }
 
 .modal-button {
-  min-width: 130px;
-  padding: 10px;
+  min-width: 140px !important;
   color: #fff;
   font-size: 15px;
   background: #474f56;
+  font-weight: 400 !important;
+  text-transform: initial !important;
   -webkit-box-shadow: 0 0 2px rgb(194, 194, 194);
           box-shadow: 0 0 2px rgb(194, 194, 194);
   border: none;
@@ -74,10 +76,11 @@
 }
 
 .message-modal {
+  outline: none;
   width: 100%;
   padding: 30px;
   line-height: 1.2;
   text-align: left;
-  background: #fff;
-  border-bottom: 1px solid #adb5bd;
+  background: #f4f4f4;
+  border-bottom: 1px solid #e8e8e8;
 }
