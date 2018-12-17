@@ -4,7 +4,7 @@ import io from 'socket.io-client'
 
 import { getFriendsRequest, postFriendshipRequest, deleteFriendRequest } from 'utils/api'
 
-const socket = io('/')
+// const socket = io('/')
 
 // Actions
 export const types = {
@@ -33,7 +33,7 @@ export function getFriendsFailed() {
 }
 
 export function sendFriendshipRequested( sender_id, receiver_id, avatar, text) {
-  socket.emit('appendNotification', { sender_id, receiver_id, avatar, text })
+  // socket.emit('appendNotification', { sender_id, receiver_id, avatar, text })
   return { type: types.SEND_FRIENDSHIP_REQUESTED, sender_id, receiver_id, avatar, text }
 }
 
@@ -74,10 +74,9 @@ export default function friends(state = initialState, action) {
     case types.SEND_FRIENDSHIP_FAILED:
       return state
     case types.REMOVE_FRIEND_REQUESTED:
-      return state.filter(item => item.get('id') != action.friendId)
-    case types.REMOVE_FRIEND_SUCCEED:
-      // return fromJS([...action.friends])
       return state
+    case types.REMOVE_FRIEND_SUCCEED:
+      return state.filter(item => item.get('id') != action.friendId)
     case types.REMOVE_FRIEND_FAILED:
       return state
     default:

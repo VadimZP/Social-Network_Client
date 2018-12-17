@@ -10,7 +10,7 @@ import {
   editPostRequest
 } from 'utils/api'
 
-const socket = io('/')
+// const socket = io('/')
 
 // Actions
 export const types = {
@@ -33,59 +33,59 @@ export const types = {
 
 // Action Creators
 export function getPostsRequested(author) {
-  return { type: types.GET_REQUESTED, author }
+  return { type: types.GET_POSTS_REQUESTED, author }
 }
 
 export function getPostsSucceed(posts) {
-  return { type: types.GET_SUCCEED, posts }
+  return { type: types.GET_POSTS_SUCCEED, posts }
 }
 
 export function getPostsFailed() {
-  return { type: types.GET_FAILED }
+  return { type: types.GET_POSTS_FAILED }
 }
 
-export function getPostRequested(id) {
-  return { type: types.GET_POST_REQUESTED, id }
+export function getPostRequested(post_id) {
+  return { type: types.GET_POST_REQUESTED, post_id }
 }
 
-export function getPostSucceed(messages) {
-  return { type: types.GET_POST_SUCCEED, messages }
+export function getPostSucceed(post) {
+  return { type: types.GET_POST_SUCCEED, post }
 }
 
 export function getPostFailed() {
   return { type: types.GET_POST_FAILED }
 }
 
-export function addPostRequested(id) {
-  return { type: types.ADD_POST_REQUESTED, id }
+export function addPostRequested(post_id, date, text) {
+  return { type: types.ADD_POST_REQUESTED, post_id, date, text }
 }
 
-export function addPostSucceed(messages) {
-  return { type: types.ADD_POST_SUCCEED, messages }
+export function addPostSucceed(post) {
+  return { type: types.ADD_POST_SUCCEED, post }
 }
 
 export function addPostFailed() {
   return { type: types.ADD_POST_FAILED }
 }
 
-export function deletePostRequested(id) {
-  return { type: types.DELETE_POST_REQUESTED, id }
+export function deletePostRequested(post_id) {
+  return { type: types.DELETE_POST_REQUESTED, post_id }
 }
 
-export function deletePostSucceed(messages) {
-  return { type: types.DELETE_POST_SUCCEED, messages }
+export function deletePostSucceed(post_id) {
+  return { type: types.DELETE_POST_SUCCEED, post_id }
 }
 
 export function deletePostFailed() {
   return { type: types.DELETE_POST_FAILED }
 }
 
-export function editPostRequested(id) {
-  return { type: types.EDIT_POST_REQUESTED, id }
+export function editPostRequested(post_id, text) {
+  return { type: types.EDIT_POST_REQUESTED, post_id, text }
 }
 
-export function editPostSucceed(messages) {
-  return { type: types.EDIT_POST_SUCCEED, messages }
+export function editPostSucceed(text) {
+  return { type: types.EDIT_POST_SUCCEED, text }
 }
 
 export function editPostFailed() {
@@ -99,31 +99,31 @@ export default function posts(state = initialState, action) {
     case types.GET_POSTS_REQUESTED:
       return state
     case types.GET_POSTS_SUCCEED:
-      return state
+      return fromJS([...action.posts])
     case types.GET_POSTS_FAILED:
       return state
     case types.GET_POST_REQUESTED:
       return state
     case types.GET_POST_SUCCEED:
-      return state
+      return fromJS([...action.post])
     case types.GET_POST_FAILED:
       return state
     case types.ADD_POST_REQUESTED:
       return state
     case types.ADD_POST_SUCCEED:
-      return state
+      return state.push(action.post)
     case types.ADD_POST_FAILED:
       return state
     case types.DELETE_POST_REQUESTED:
       return state
     case types.DELETE_POST_SUCCEED:
-      return state
+      return state.filter(item => item.get('id') != action.post_id)
     case types.DELETE_POST_FAILED:
       return state
     case types.EDIT_POST_REQUESTED:
       return state
     case types.EDIT_POST_SUCCEED:
-      return state
+      return state/* .find(item => item.get('id') == action.post_id) */
     case types.EDIT_POST_FAILED:
       return state
     default:
@@ -133,11 +133,11 @@ export default function posts(state = initialState, action) {
 
 export function* fetchPosts(action) {
   try {
-    const result = yield call(getPostsRequest)
+    const result = yield call(getPostsRequest, action.author)
 
     const posts = yield result.json()
 
-    yield put(getPostsRequested(posts))
+    yield put(getPostsSucceed(posts))
   } catch (error) {
     yield put(getPostsFailed())
   }
@@ -145,11 +145,11 @@ export function* fetchPosts(action) {
 
 export function* fetchPost(action) {
   try {
-    const result = yield call(getPostRequest)
+    const result = yield call(getPostRequest, action.post_id)
 
     const post = yield result.json()
 
-    yield put(getPostRequest(post))
+    yield put(getPostSucceed(post))
   } catch (error) {
     yield put(getPostFailed())
   }
@@ -157,11 +157,11 @@ export function* fetchPost(action) {
 
 export function* sendPost(action) {
   try {
-    const result = yield call(addPostRequest)
+    const result = yield call(addPostRequest, action.post_id, action.date, action.text)
 
     const post = yield result.json()
 
-    yield put(addPostRequested(post))
+    yield put(addPostSucceed(post))
   } catch (error) {
     yield put(addPostFailed())
   }
@@ -169,11 +169,11 @@ export function* sendPost(action) {
 
 export function* deletePost(action) {
   try {
-    const result = yield call(deletePostRequest)
+    const result = yield call(deletePostRequest, action.post_id)
 
     const post = yield result.json()
 
-    yield put(deletePostRequested(post))
+    yield put(deletePostSucceed(post))
   } catch (error) {
     yield put(deletePostFailed())
   }
@@ -181,11 +181,11 @@ export function* deletePost(action) {
 
 export function* editPost(action) {
   try {
-    const result = yield call(editPostRequest)
+    const result = yield call(editPostRequest, action.post_id, action.text)
 
     const post = yield result.json()
 
-    yield put(editPostRequested(post))
+    yield put(editPostSucceed(post))
   } catch (error) {
     yield put(editPostFailed())
   }

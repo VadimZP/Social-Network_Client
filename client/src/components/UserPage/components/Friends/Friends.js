@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react'
-import { NavLink, Redirect } from 'react-router-dom'
+import { Redirect } from 'react-router-dom'
 import { Switch, Route } from 'react-router'
 import PropTypes from 'prop-types'
 import ImmutablePropTypes from 'react-immutable-proptypes'
@@ -10,10 +10,7 @@ import uuid from 'uuid'
 import Button from '@material-ui/core/Button'
 import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
-import TextField from '@material-ui/core/TextField'
-// import Icon from '@material-ui/icons/Icon'
 import InputBase from '@material-ui/core/InputBase';
-import { fade } from '@material-ui/core/styles/colorManipulator';
 import SearchIcon from '@material-ui/icons/Search';
 import DeleteIcon from '@material-ui/icons/Delete'
 import SendIcon from '@material-ui/icons/Send'
@@ -144,10 +141,8 @@ class Friends extends Component {
   componentDidMount() {
     const {
       userData,
-      getUsersRequested,
       getLastUserRequested,
       getFriendsRequested,
-      users
     } = this.props
 
     getLastUserRequested(userData.get('id'))

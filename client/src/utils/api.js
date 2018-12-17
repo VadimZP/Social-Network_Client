@@ -62,11 +62,11 @@ export const sendMsgRequest = (receiver_id, id, name, surname, avatar, date, mes
   })
 })
 
-export const getPostsRequest = author => new Http().get(`posts/${author}`)
+export const getPostsRequest = author => new Http().get(`posts/all/${author}`)
 
 export const getPostRequest = post_id => new Http().get(`posts/${post_id}`, { headers, body: JSON.stringify({}) })
 
-export const addPostRequest = (author, text) => new Http().post('posts', { headers, body: JSON.stringify({author, text}) })
+export const addPostRequest = (author, date, text) => new Http().post('posts', { headers, body: JSON.stringify({author, date, text}) })
 
 export const deletePostRequest = post_id => new Http().delete(`posts/${post_id}`, { headers, body: JSON.stringify({ }) })
 

@@ -8,14 +8,14 @@ import { closeModal } from 'redux/modules/modals'
 
 class MessageModal extends Component {
   componentDidMount() {
-    console.log(this.inputDiv.focus())
+    this.inputDiv.focus()
   }
   render () {
     return (
       <div
         contentEditable
         ref={e => this.inputDiv = e}
-        className="message-modal"
+        className="text-modal"
         onInput={e => this.props.update('messageText', e.target.innerText)}
       />
     )
