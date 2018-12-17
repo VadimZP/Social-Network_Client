@@ -10,6 +10,7 @@ import {
 import { types as usersType, fetchUsers, fetchLastUser } from './modules/users'
 import { types as friendsType, fetchFriends, postFriendship, deleteFriend } from './modules/friends'
 import { types as messagesType, fetchUserMsgs, sendMsg, fetchUserNotifications, acceptFriendship, rejectFriendship } from './modules/messages'
+import { types as postsType, fetchPosts, fetchPost, sendPost, deletePost, editPost } from './modules/posts'
 
 export default function* rootSaga() {
   yield [
@@ -22,11 +23,16 @@ export default function* rootSaga() {
     fork(takeLatest, usersType.GET_LAST_USER_REQUESTED, fetchLastUser),
     fork(takeLatest, friendsType.GET_FRIENDS_REQUESTED, fetchFriends),
     fork(takeLatest, friendsType.SEND_FRIENDSHIP_REQUESTED, postFriendship),
+    fork(takeLatest, friendsType.REMOVE_FRIEND_REQUESTED, deleteFriend),
     fork(takeLatest, messagesType.GET_USER_MSGS_REQUESTED, fetchUserMsgs),
     fork(takeLatest, messagesType.GET_USER_NOTIFICS_REQUESTED, fetchUserNotifications),
     fork(takeLatest, messagesType.SEND_MSG_REQUESTED, sendMsg),
     fork(takeLatest, messagesType.ACCEPT_FRIENDSHIP_REQUESTED, acceptFriendship),
     fork(takeLatest, messagesType.REJECT_FRIENDSHIP_REQUESTED, rejectFriendship),
-    fork(takeLatest, friendsType.REMOVE_FRIEND_REQUESTED, deleteFriend)
+    fork(takeLatest, postsType.GET_POSTS_REQUESTED, fetchPosts),
+    fork(takeLatest, postsType.GET_POST_REQUESTED, fetchPost),
+    fork(takeLatest, postsType.ADD_POST_REQUESTED, sendPost),
+    fork(takeLatest, postsType.DELETE_POST_REQUESTED, deletePost),
+    fork(takeLatest, postsType.EDIT_POST_REQUESTED, editPost),
   ]
 }

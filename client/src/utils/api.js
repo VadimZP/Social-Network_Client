@@ -62,6 +62,15 @@ export const sendMsgRequest = (receiver_id, id, name, surname, avatar, date, mes
   })
 })
 
+export const getPostsRequest = author => new Http().get(`posts/${author}`)
+
+export const getPostRequest = post_id => new Http().get(`posts/${post_id}`, { headers, body: JSON.stringify({}) })
+
+export const addPostRequest = (author, text) => new Http().post('posts', { headers, body: JSON.stringify({author, text}) })
+
+export const deletePostRequest = post_id => new Http().delete(`posts/${post_id}`, { headers, body: JSON.stringify({ }) })
+
+export const editPostRequest = (post_id, text) => new Http().put(`posts/${post_id}`, { headers, body: JSON.stringify({ post_id, text }) })
 
 export const changeSettingsRequest = userData => new Http().put('settings', { headers, body: JSON.stringify({ ...userData }) })
 
