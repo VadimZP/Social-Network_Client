@@ -68,9 +68,9 @@ export const getPostRequest = post_id => new Http().get(`posts/${post_id}`, { he
 
 export const addPostRequest = (author, date, text) => new Http().post('posts', { headers, body: JSON.stringify({author, date, text}) })
 
-export const deletePostRequest = post_id => new Http().delete(`posts/${post_id}`, { headers, body: JSON.stringify({ }) })
+export const deletePostRequest = post_id => new Http().delete(`posts/${post_id}`)
 
-export const editPostRequest = (post_id, text) => new Http().put(`posts/${post_id}`, { headers, body: JSON.stringify({ post_id, text }) })
+export const editPostRequest = (post_id, date, text) => new Http().put(`posts/${post_id}`, { headers, body: JSON.stringify({ post_id, date, text }) })
 
 export const changeSettingsRequest = userData => new Http().put('settings', { headers, body: JSON.stringify({ ...userData }) })
 

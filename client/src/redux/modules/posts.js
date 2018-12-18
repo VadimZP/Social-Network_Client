@@ -56,8 +56,8 @@ export function getPostFailed() {
   return { type: types.GET_POST_FAILED }
 }
 
-export function addPostRequested(post_id, date, text) {
-  return { type: types.ADD_POST_REQUESTED, post_id, date, text }
+export function addPostRequested(author, date, text) {
+  return { type: types.ADD_POST_REQUESTED, author, date, text }
 }
 
 export function addPostSucceed(post) {
@@ -80,12 +80,12 @@ export function deletePostFailed() {
   return { type: types.DELETE_POST_FAILED }
 }
 
-export function editPostRequested(post_id, text) {
-  return { type: types.EDIT_POST_REQUESTED, post_id, text }
+export function editPostRequested(post_id, date, text) {
+  return { type: types.EDIT_POST_REQUESTED, post_id, date, text }
 }
 
-export function editPostSucceed(text) {
-  return { type: types.EDIT_POST_SUCCEED, text }
+export function editPostSucceed(post_id, text) {
+  return { type: types.EDIT_POST_SUCCEED, post_id, text }
 }
 
 export function editPostFailed() {
@@ -111,7 +111,7 @@ export default function posts(state = initialState, action) {
     case types.ADD_POST_REQUESTED:
       return state
     case types.ADD_POST_SUCCEED:
-      return state.push(action.post)
+      return state.unshift(fromJS(action.post))
     case types.ADD_POST_FAILED:
       return state
     case types.DELETE_POST_REQUESTED:
@@ -123,7 +123,9 @@ export default function posts(state = initialState, action) {
     case types.EDIT_POST_REQUESTED:
       return state
     case types.EDIT_POST_SUCCEED:
-      return state/* .find(item => item.get('id') == action.post_id) */
+      const postIndex = state.findIndex(item => item.get('id') == action.post_id)
+      console.log(action)
+      return state.setIn([postIndex, 'text'], action.text);
     case types.EDIT_POST_FAILED:
       return state
     default:
@@ -157,7 +159,7 @@ export function* fetchPost(action) {
 
 export function* sendPost(action) {
   try {
-    const result = yield call(addPostRequest, action.post_id, action.date, action.text)
+    const result = yield call(addPostRequest, action.author, action.date, action.text)
 
     const post = yield result.json()
 
@@ -181,11 +183,11 @@ export function* deletePost(action) {
 
 export function* editPost(action) {
   try {
-    const result = yield call(editPostRequest, action.post_id, action.text)
+    const result = yield call(editPostRequest, action.post_id, action.date, action.text)
 
     const post = yield result.json()
 
-    yield put(editPostSucceed(post))
+    yield put(editPostSucceed(action.post_id, action.text))
   } catch (error) {
     yield put(editPostFailed())
   }

@@ -40,9 +40,6 @@ const styles = theme => ({
   },
   cssRadio: {
     color: '#34495E',
-    '&$checked': {
-      color: '#34495E',
-    },
   }
 })
 
@@ -211,7 +208,7 @@ class Settings extends Component {
         <div className="user-data">
           <div className="column item-1">
               <TextField
-                id="standard-name"
+                id="inputName"
                 label="Name"
                 className={classes.textField}
                 InputLabelProps={{
@@ -231,7 +228,7 @@ class Settings extends Component {
                 margin="normal"
               />
           <TextField
-              id="standard-name"
+              id="inputSurname"
               label="Surname"
               className={classes.textField}
               InputLabelProps={{
@@ -313,7 +310,7 @@ class Settings extends Component {
           <div className="column item-2">
             <div className="select-wrapper">
               <div className="location-select-wrapper">
-                <span class="location-pseudo-label">Location</span>
+                <span className="location-pseudo-label">Location</span>
                 <Select
                   name="countries"
                   className={classes.select}
@@ -325,12 +322,12 @@ class Settings extends Component {
                   }} />}
                 >
                   {Utils.getCountries().map(item => (
-                    <MenuItem value={item.alpha2Code}>{item.name}</MenuItem>
+                    <MenuItem key={item.alpha2Code} value={item.alpha2Code}>{item.name}</MenuItem>
                   ))}
                 </Select>
               </div>
               <div className="birth-select-wrapper">
-                <span class="birth-pseudo-label">Birth</span>
+                <span className="birth-pseudo-label">Birth</span>
                 <Select
                   name="day"
                   value={birth.day}
@@ -342,7 +339,7 @@ class Settings extends Component {
                   }} />}
                 >
                   {Utils.getDays().map(d => (
-                    <MenuItem value={d}>{d}</MenuItem>
+                    <MenuItem key={d} value={d}>{d}</MenuItem>
                   ))}
                 </Select>
                 <Select
@@ -356,7 +353,7 @@ class Settings extends Component {
                   }} />}
                 >
                   {Utils.getMonths().map(m => (
-                    <MenuItem value={m}>{m}</MenuItem>
+                    <MenuItem key={m} value={m}>{m}</MenuItem>
                   ))}
                 </Select>
                 <Select
@@ -370,13 +367,13 @@ class Settings extends Component {
                 }} />}
               >
                   {Utils.getYears().map(y => (
-                    <MenuItem value={y}>{y}</MenuItem>
+                    <MenuItem key={y} value={y}>{y}</MenuItem>
                   ))}
                 </Select>
               </div>
             </div>
             <div className="gender-radio-wrapper">
-            <span class="gender-pseudo-label">Gender</span>
+            <span className="gender-pseudo-label">Gender</span>
               <FormControlLabel
                 value="male"
                 style={{ margin: 0 }}

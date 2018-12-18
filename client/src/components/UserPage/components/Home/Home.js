@@ -8,7 +8,7 @@ import CreateIcon from '@material-ui/icons/Create';
 import { withStyles } from '@material-ui/core/styles'
 
 import './Home.css'
-import { getPostsRequested, getPostRequested, addPostRequested, deletePostRequested, editPostRequested } from 'redux/modules/posts'
+import { getPostsRequested, getPostRequested, addPostRequested } from 'redux/modules/posts'
 import { openModal } from 'redux/modules/modals'
 import { connect } from 'react-redux'
 import Post from './components/Post'
@@ -17,6 +17,14 @@ const styles = theme => ({
   textField: {
     width: '100%',
     marginBottom: 20,
+  },
+  button: {
+    backgroundColor: '#fff',
+    border: '1px solid #e8e8e8',
+    marginBottom: 20,
+    width: '100%',
+    display: 'flex',
+    justifyContent: 'space-between',
   },
   cssLabel: {
     '&$cssFocused': {
@@ -32,6 +40,9 @@ const styles = theme => ({
       borderBottomColor: '#34495E',
     },
   },
+  createIcon: {
+    color: '#6D94BE'
+  }
 });
 
 class Home extends Component {
@@ -43,7 +54,7 @@ class Home extends Component {
   }
 
   render() {
-    const { posts, userData, location, classes, openModal, getPostsRequested, getPostRequested, addPostRequested, deletePostRequested, editPostRequested } = this.props
+    const { posts, userData, location, classes, openModal, getPostsRequested, getPostRequested, addPostRequested } = this.props
 
     const anotherProfile = location.state
 
@@ -130,16 +141,17 @@ class Home extends Component {
         <section id="posts">
           <Button
             type="button"
-            className="button"
+            className={classes.button}
             onClick={() => openModal(addPostRequested.bind(null, id, moment().format('YYYY-MM-DD HH:mm:ss')
             ), true, 'Send')}
           >
-            Write a post
-                <CreateIcon color="primary" className={classes.rightIcon} />
+            Write a post...
+                <CreateIcon color="primary" className={classes.createIcon} />
           </Button>
           <ul className="post-list">
             {posts.toJS().map(item => {
-              return <Post key={item.id} id={item.id} text={item.text} date={item.date} />
+              console.log(item)
+              return <Post key={uuid.v4()} id={item.id} text={item.text} date={item.date} />
             })}
           </ul>
         </section>
@@ -163,8 +175,6 @@ export default connect(
     getPostsRequested,
     getPostRequested,
     addPostRequested,
-    deletePostRequested,
-    editPostRequested,
     openModal: (func, customModal, btnText) => openModal({
       id: uuid.v4(),
       btnText,
