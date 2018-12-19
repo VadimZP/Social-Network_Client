@@ -1,5 +1,13 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
+import Input from '@material-ui/core/Input'
+import TextField from '@material-ui/core/TextField'
+import Select from '@material-ui/core/Select'
+import MenuItem from '@material-ui/core/MenuItem'
+import FormControlLabel from '@material-ui/core/FormControlLabel'
+import Radio from '@material-ui/core/Radio'
+import Button from '@material-ui/core/Button'
+import { withStyles } from '@material-ui/core/styles'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 
@@ -7,6 +15,36 @@ import './RegisterForm.css'
 import Utils from 'utils/Utils'
 import { userRegistrationRequested } from 'redux/modules/global'
 import RegisterResult from './components/RegisterResult/RegisterResult'
+
+const styles = theme => ({
+  textField: {
+    width: '100%',
+  },
+  select: {
+    width: '100%',
+    marginBottom: 40
+  },
+  cssLabel: {
+    '&$cssFocused': {
+      color: '#34495E',
+    },
+  },
+  cssFocused: {},
+  cssUnderline: {
+    '&:before': {
+      borderBottomColor: '#cdcdcd',
+    },
+    '&:after': {
+      borderBottomColor: '#34495E',
+    },
+  },
+  cssRadio: {
+    color: '#34495E',
+    '&$checked': {
+      color: '#34495E',
+    },
+  }
+})
 
 class RegisterForm extends Component {
   static propTypes = {
@@ -101,10 +139,12 @@ class RegisterForm extends Component {
 
   countryChange = e => {
     e.persist()
+    const country = Utils.getCountries().find(item => item.alpha2Code === e.target.value)
     this.setState(prevState => ({
-      userData: { ...prevState.userData, country: e.target.options[e.target.selectedIndex].text }
+      userData: { ...prevState.userData, country: country.name }
     }))
   }
+
 
   registerUser = () => {
     const { userRegistrationRequested } = this.props
@@ -115,6 +155,8 @@ class RegisterForm extends Component {
 
   render() {
     let isDisabled = false
+
+    const { classes } = this.props
 
     const {
       email,
@@ -144,134 +186,214 @@ class RegisterForm extends Component {
     }
 
     return (
-      <div>
-        <form
-          className="form-register"
-          action="/register"
-        >
-          <label htmlFor="inputEmail" className="sr-only">
-            Email address
-          </label>
-          {emailErr && <p style={{ color: 'red', fontSize: 13, paddingTop: 5 }}>Empty or incorrect input</p>}
-          <input
-            type="email"
-            id="inputEmail"
-            value={email}
-            onChange={this.emailChange}
-            onBlur={() => {
-              const emailFormat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
-              if (!email || !email.match(emailFormat)) {
-                this.setState({ emailErr: true })
-                return
-              }
-              this.setState({ emailErr: false })
-            }}
-            required
-          />
-          <label htmlFor="inputPassword" className="sr-only">
-            Password
-          </label>
-          {passErr && <p style={{ color: 'red', fontSize: 13, paddingTop: 5 }}>Empty or too short input</p>}
-          <input
-            type="password"
-            id="inputPassword"
-            value={password}
-            onChange={this.passwordChange}
-            onBlur={() => {
-              if (password.length < 6) {
-                this.setState({ passErr: true })
-                return
-              }
-              this.setState({ passErr: false })
-            }}
-            required
-          />
-          <label htmlFor="inputName" className="sr-only">
-            Name
-          </label>
-          <input
-            type="text"
-            id="inputName"
-            value={name}
-            onChange={this.nameChange}
-            required
-          />
-          <label htmlFor="inputSurname" className="sr-only">
-            Surname
-          </label>
-          <input
-            type="text"
-            id="inputSurname"
-            value={surname}
-            onChange={this.surnameChange}
-            required
-          />
-          <div className="radio-wrapper">
-            <input
-              type="radio"
-              name="gender"
-              value="male"
-              checked={gender === 'male' && true}
-              onChange={this.genderChange}
+      <Fragment>
+        <form className="form-register">
+          <TextField
+              error={emailErr}
+              label={emailErr ? "Empty or incorrect email" : "Email"}
+              type="email"
+              autoComplete="new-password"
+              className={classes.textField}
+              InputLabelProps={{
+                classes: {
+                  root: classes.cssLabel,
+                  focused: classes.cssFocused,
+                },
+              }}
+              InputProps={{
+                classes: {
+                  focused: classes.cssFocused,
+                  underline: classes.cssUnderline,
+                },
+              }}
+              value={email}
+              onChange={this.emailChange}
+              onBlur={() => {
+                const emailFormat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
+                if (!email || !email.match(emailFormat)) {
+                  this.setState({ emailErr: true })
+                  return
+                }
+                this.setState({ emailErr: false })
+              }}
+              margin="normal"
             />
-            Male
-            <input
-              type="radio"
-              name="gender"
-              value="female"
-              checked={gender === 'female' && true}
-              onChange={this.genderChange}
+          <TextField
+              error={passErr}
+              label={passErr ? "Empty or too short password" : "Password"}
+              className={classes.textField}
+              InputLabelProps={{
+                classes: {
+                  root: classes.cssLabel,
+                  focused: classes.cssFocused,
+                },
+              }}
+              InputProps={{
+                classes: {
+                  focused: classes.cssFocused,
+                  underline: classes.cssUnderline,
+                },
+              }}
+              type="password"
+              onChange={this.passwordChange}
+              onBlur={() => {
+                if (password.length < 6) {
+                  this.setState({ passErr: true })
+                  return
+                }
+                this.setState({ passErr: false })
+              }}
+              margin="normal"
             />
-            Female
-          </div>
-          <div className="select-wrapper">
-            <span>Birthday:</span>
-            <select name="day" onChange={this.birthChange.bind(this, 'day')}>
-              {Utils.getDays().map(d => (
-                <option value={d} key={d}>
-                  {d}
-                </option>
-              ))}
-            </select>
-            <select
-              name="month"
-              onChange={this.birthChange.bind(this, 'month')}
-            >
-              {Utils.getMonths().map(m => (
-                <option value={m} key={m}>
-                  {m}
-                </option>
-              ))}
-            </select>
-            <select name="years" onChange={this.birthChange.bind(this, 'year')}>
-              {Utils.getYears().map(y => (
-                <option value={y} key={y}>
-                  {y}
-                </option>
-              ))}
-            </select>
-            <select name="countries" onChange={this.countryChange}>
-              {Utils.getCountries().map(item => (
-                <option value={item.alpha2Code} key={item.name}>
-                  {item.name}
-                </option>
-              ))}
-            </select>
-          </div>
-          <button
-            className="btn-submit-form"
+          <TextField
+                label="Name"
+                className={classes.textField}
+                InputLabelProps={{
+                  classes: {
+                    root: classes.cssLabel,
+                    focused: classes.cssFocused,
+                  },
+                }}
+                InputProps={{
+                  classes: {
+                    focused: classes.cssFocused,
+                    underline: classes.cssUnderline,
+                  },
+                }}
+                value={name}
+                onChange={this.nameChange}
+                margin="normal"
+              />
+          <TextField
+              label="Surname"
+              className={classes.textField}
+              InputLabelProps={{
+                classes: {
+                  root: classes.cssLabel,
+                  focused: classes.cssFocused,
+                },
+              }}
+              InputProps={{
+                classes: {
+                  focused: classes.cssFocused,
+                  underline: classes.cssUnderline,
+                },
+              }}
+              value={surname}
+              onChange={this.surnameChange}
+              margin="normal"
+            />
+          <div className="gender-radio-wrapper">
+           <span class="gender-pseudo-label">Gender</span>
+          <FormControlLabel
+                value="male"
+                style={{ margin: 0 }}
+                control={
+                  <Radio
+                    name="gender"
+                    checked={gender === 'male' && true}
+                    onChange={this.genderChange}
+                    color="default"
+                    classes={{
+                      root: classes.cssRadio,
+                    }}
+                  />
+                }
+                label="Male"
+                labelPlacement="start"
+              />
+              <FormControlLabel
+                value="female"
+                control={
+                <Radio 
+                  name="gender"
+                  color="default"
+                  checked={gender === 'female' && true}
+                  onChange={this.genderChange} 
+                  classes={{
+                    root: classes.cssRadio,
+                  }}
+                />}
+                label="Female"
+                labelPlacement="start"
+              />
+              </div>
+              <div className="birth-select-wrapper">
+                <span class="birth-pseudo-label">Birth</span>
+                <Select
+                  name="day"
+                  value={1}
+                  style={{ width: 'calc(33.3% - 20px)', marginRight: 20 }}
+                  onChange={this.birthChange.bind(this, 'day')}
+                  input={<Input classes={{
+                    focused: classes.cssFocused,
+                    underline: classes.cssUnderline,
+                  }} />}
+                >
+                  {Utils.getDays().map(d => (
+                    <MenuItem value={d}>{d}</MenuItem>
+                  ))}
+                </Select>
+                <Select
+                  name="month"
+                  value={'January'}
+                  style={{ width: 'calc(33.3% - 20px)', marginRight: 20 }}
+                  onChange={this.birthChange.bind(this, 'month')}
+                  input={<Input classes={{
+                    focused: classes.cssFocused,
+                    underline: classes.cssUnderline,
+                  }} />}
+                >
+                  {Utils.getMonths().map(m => (
+                    <MenuItem value={m}>{m}</MenuItem>
+                  ))}
+                </Select>
+                <Select
+                name="years"
+                value={1980}
+                style={{width: 'calc(33.3% - 20px)', marginLeft: 20}}
+                onChange={this.birthChange.bind(this, 'year')}
+                input={<Input classes={{
+                  focused: classes.cssFocused,
+                  underline: classes.cssUnderline,
+                }} />}
+              >
+                  {Utils.getYears().map(y => (
+                    <MenuItem value={y}>{y}</MenuItem>
+                  ))}
+                </Select>
+                </div>
+                <div className="location-select-wrapper">
+                <span class="location-pseudo-label">Location</span>
+                <Select
+                  name="countries"
+                  className={classes.select}
+                  value={'AF'}
+                  onChange={this.countryChange}
+                  input={<Input classes={{
+                    focused: classes.cssFocused,
+                    underline: classes.cssUnderline,
+                  }} />}
+                >
+                  {Utils.getCountries().map(item => (
+                    <MenuItem value={item.alpha2Code}>{item.name}</MenuItem>
+                  ))}
+                </Select>
+                </div>
+          <Button
+            variant="contained"
             type="button"
-            style={isDisabled ? { background: '#f1f1f1' } : {}}
+            style={{ width: 150, margin: 'auto' }}
             onClick={this.registerUser}
             disabled={isDisabled}
           >
             Register
-          </button>
+          </Button>
         </form>
         {registrationRequest && (
           <RegisterResult registerSuccess={registerSuccess} isLoading={isLoading} />
         )}
-      </div>
+      </Fragment>
     )
   }
 }
@@ -279,6 +401,8 @@ class RegisterForm extends Component {
 RegisterForm.defaultProps = {
   registrationRequestWasMade: false
 }
+
+const customizedRegisterForm = withStyles(styles)(RegisterForm)
 
 const mapStateAppToProps = state => ({
   registrationRequestWasMade: state.getIn(['global', 'registrationRequestWasMade']),
@@ -291,5 +415,5 @@ export default withRouter(
     {
       userRegistrationRequested
     }
-  )(RegisterForm)
+  )(customizedRegisterForm)
 )

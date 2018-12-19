@@ -5,11 +5,15 @@ import { connect } from 'react-redux'
 import io from 'socket.io-client'
 import uuid from 'uuid'
 import moment from 'moment'
+import SendIcon from '@material-ui/icons/Send'
+import { withStyles } from '@material-ui/core/styles'
 
 import { sendMessageRequested } from 'redux/modules/messages'
 import Dialog from '../Dialog/Dialog'
 
-const socket = io('/')
+// const socket = io('/')
+
+const styles = theme => ({})
 
 class DialogContainer extends Component {
   static propTypes = {
@@ -36,7 +40,7 @@ class DialogContainer extends Component {
   }
 
   componentDidMount() {
-    socket.on(
+    /* socket.on(
       this.props.userData.get('id'),
       ({ receiver_id, sender_id, text, sender_name, sender_surname, date }) => {
         if (this.dialogContainerEl !== null) {
@@ -63,7 +67,7 @@ class DialogContainer extends Component {
           }
         }
       }
-    )
+    ) */
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -95,7 +99,7 @@ class DialogContainer extends Component {
   }
 
   render() {
-    const { children, interlocutorId } = this.props
+    const { children, interlocutorId, classes } = this.props
     const { obj, notFriend } = this.state
 
     return (
@@ -106,17 +110,18 @@ class DialogContainer extends Component {
       >
         {children}
         {obj[interlocutorId]}
-        {notFriend && <p className="dialog-message" style={{fontWeight: 'bold', color: '#b22c35'}}>{notFriend}</p>}
+        {notFriend && <p className="dialog-message" style={{ fontWeight: 'bold', color: '#b22c35' }}>{notFriend}</p>}
         <div className="message-bar">
           <button
             type="button"
             className="btn-submit-message"
+            style={{ cursor: 'pointer' }}
             onClick={e => {
               this.sendMessage()
               this.textBox.innerText = ''
             }}
           >
-            Send
+            <SendIcon color="primary" className="sendIcon"/* {classes.sendIcon} */ />
           </button>
           <div
             role="textbox"
@@ -133,9 +138,7 @@ class DialogContainer extends Component {
             style={{
               padding: '15px',
               width: '100%',
-              background: '#fff',
               textAlign: 'left',
-              borderTop: '1px solid #ADB5BD',
               outline: 'none'
             }}
             onInput={e => this.writeMessage(e)}
@@ -145,6 +148,8 @@ class DialogContainer extends Component {
     )
   }
 }
+
+const customizedDialogContainer = withStyles(styles)(DialogContainer)
 
 const mapStateToProps = state => ({
   userData: state.getIn(['global', 'userData']),
@@ -156,4 +161,4 @@ export default connect(
   {
     sendMessageRequested
   }
-)(DialogContainer)
+)(customizedDialogContainer)

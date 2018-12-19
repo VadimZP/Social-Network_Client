@@ -1,18 +1,25 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import Button from '@material-ui/core/Button'
 import PropTypes from 'prop-types'
 
 import './Modal.css'
 import { closeModal } from 'redux/modules/modals'
 
-const MessageModal = ({ update }) => {
-  return (
-    <div
-      contentEditable
-      className="message-modal"
-      onInput={e => update('messageText', e.target.innerText)}
-    />
-  )
+class MessageModal extends Component {
+  componentDidMount() {
+    this.inputDiv.focus()
+  }
+  render () {
+    return (
+      <div
+        contentEditable
+        ref={e => this.inputDiv = e}
+        className="text-modal"
+        onInput={e => this.props.update('messageText', e.target.innerText)}
+      />
+    )
+  }
 }
 
 MessageModal.propTypes = {
@@ -65,20 +72,22 @@ class Modal extends Component {
         <div className="modal">
           {customModal ? <MessageModal update={this.update} /> : <div className="text">Are you sure to do this?</div>}
           <div className="buttons">
-            <button
+            <Button
               type="button"
+              variant="contained"
               className="modal-button"
               onClick={() => this.onConfirm(messageText)}
             >
               { btnText || 'Confirm' }
-            </button>
-            <button
+            </Button>
+            <Button
               type="button"
+              variant="contained"
               className="modal-button"
               onClick={() => this.onClose()}
             >
               Close
-            </button>
+            </Button>
           </div>
         </div>
       </div>

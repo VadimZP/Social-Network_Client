@@ -1,14 +1,14 @@
 .enter {
     width: 400px;
-    margin: 200px auto;
+    margin: 100px auto;
     box-shadow: 0 0 6px #ADB5BD;
-    border-radius: 3px;
+    border-radius: 5px;
     background: #fff;
 }
 .enter-header {
     display: flex;
     align-content: center;
-    border-radius: 2px;
+    border-radius: 5px;
     text-align: center;
 }
 
@@ -20,7 +20,7 @@
 }
 
 .enter-body {
-    padding: 20px 10px 50px;
+    padding: 20px;
 }
 
 .active {

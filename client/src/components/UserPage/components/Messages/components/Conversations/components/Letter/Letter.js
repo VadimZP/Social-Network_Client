@@ -1,4 +1,5 @@
 import React from 'react'
+import ListItem from '@material-ui/core/ListItem';
 
 export default function Letter({ letter, ...props }) {
   const {
@@ -15,8 +16,8 @@ export default function Letter({ letter, ...props }) {
   } = props
 
   let msgText =
-    text.length - text.slice(0, 30).length ? 
-      (msgText = `${text.slice(0, 30)}...`) :
+    text.length - text.slice(0, 20).length ? 
+      (msgText = `${text.slice(0, 20)}...`) :
       (msgText = text)
       
   const avatarBg = interlocutorAvatar && interlocutorAvatar[0] === '#' ?
@@ -32,17 +33,19 @@ export default function Letter({ letter, ...props }) {
       role="menuitem"
       tabIndex={0}
     >
-      <div
-        className="avatar"
-        style={avatarBg}
-      />
-      <span className="letter-date">{date}</span>
-      <p className="letter-text">
-        <span className="user">
-          {`${sender_name} ${sender_surname}:`}
-        </span>
-        {` ${msgText}`}
-      </p>
+      <ListItem className="listItem" style={{ padding: '15px 20px', borderRadius: 8 }} button>
+        <div
+          className="avatar"
+          style={avatarBg}
+        />
+        <span className="letter-date">{date}</span>
+        <p className="letter-text">
+          <span className="user">
+            {`${sender_name} ${sender_surname}:`}
+          </span>
+          {` ${msgText}`}
+        </p>
+      </ListItem>
     </li>
   )
 }

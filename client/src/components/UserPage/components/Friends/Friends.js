@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react'
-import { NavLink, Redirect } from 'react-router-dom'
+import { Redirect } from 'react-router-dom'
 import { Switch, Route } from 'react-router'
 import PropTypes from 'prop-types'
 import ImmutablePropTypes from 'react-immutable-proptypes'
@@ -7,6 +7,14 @@ import moment from 'moment'
 import { List } from 'immutable'
 import { connect } from 'react-redux'
 import uuid from 'uuid'
+import Button from '@material-ui/core/Button'
+import Tabs from '@material-ui/core/Tabs'
+import Tab from '@material-ui/core/Tab'
+import InputBase from '@material-ui/core/InputBase';
+import SearchIcon from '@material-ui/icons/Search';
+import DeleteIcon from '@material-ui/icons/Delete'
+import SendIcon from '@material-ui/icons/Send'
+import { withStyles } from '@material-ui/core/styles'
 
 import { getUsersRequested, getLastUserRequested } from 'redux/modules/users'
 import { fetchUserRequested } from 'redux/modules/global'
@@ -16,6 +24,69 @@ import { sendFriendshipRequested, getFriendsRequested, removeFriendRequested } f
 
 import './Friends.css'
 import Person from './components/Person/Person'
+
+const styles = theme => ({
+  root: {
+    flexGrow: 1,
+    backgroundColor: theme.palette.background.paper,
+  },
+  flexContainer: {
+    minHeight: 'inherit'
+  },
+  tabsRoot: {
+    borderBottom: '1px solid #e8e8e8',
+    overflow: 'initial',
+    minHeight: 65,
+  },
+  tabsIndicator: {
+    backgroundColor: '#34495E',
+    height: 4,
+  },
+  tabRoot: {
+    minHeight: 65,
+  },
+  search: {
+    position: 'relative',
+    borderRadius: theme.shape.borderRadius,
+    backgroundColor: 'rgba(0, 0, 0, 0.05)',
+    '&:hover': {
+      backgroundColor: 'rgba(0, 0, 0, 0.03)',
+    },
+    marginTop: 20,
+    marginRight: 20,
+    width: '100%',
+    [theme.breakpoints.up('sm')]: {
+      marginLeft: 20,
+      width: 'auto',
+    },
+  },
+  searchIcon: {
+    width: theme.spacing.unit * 9,
+    height: '100%',
+    position: 'absolute',
+    pointerEvents: 'none',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    color: 'rgba(0, 0, 0, 0.20)',
+  },
+  inputRoot: {
+    color: 'inherit',
+    width: '100%',
+  },
+  inputInput: {
+    paddingTop: theme.spacing.unit,
+    paddingRight: theme.spacing.unit,
+    paddingBottom: theme.spacing.unit,
+    paddingLeft: theme.spacing.unit * 10,
+    width: '100%'
+  },
+  rightIcon: {
+    marginLeft: theme.spacing.unit,
+    width: 18,
+    height: 18,
+  }
+})
 
 class Friends extends Component {
   static propTypes = {
@@ -45,6 +116,7 @@ class Friends extends Component {
 
   state = {
     componentBody: 'friends',
+    value: 0,
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
@@ -69,10 +141,8 @@ class Friends extends Component {
   componentDidMount() {
     const {
       userData,
-      getUsersRequested,
       getLastUserRequested,
       getFriendsRequested,
-      users
     } = this.props
 
     getLastUserRequested(userData.get('id'))
@@ -99,6 +169,10 @@ class Friends extends Component {
     }
   }
 
+  handleChange = (event, value) => {
+    this.setState({ value })
+  }
+
   render() {
     const {
       match,
@@ -109,6 +183,8 @@ class Friends extends Component {
       openModal,
       removeFriendRequested,
       sendMessageRequested,
+      history,
+      classes
     } = this.props
 
     const {
@@ -127,21 +203,25 @@ class Friends extends Component {
       if (friends.toJS().find(friend => friend.id === user.id)) {
         return (
           <Person user={user} key={user.id}>
-            <button
+            <Button
               type="button"
               className="button"
+              variant="contained"
               onClick={() => openModal(sendMessageRequested.bind(null, user.id, id, name, surname, avatar, moment().format('YYYY-MM-DD HH:mm:ss')
               ), true, 'Send')}
             >
-              Send a message
-            </button>
-            <button
+              Message
+              <SendIcon color="primary" className={classes.rightIcon} />
+            </Button>
+            <Button 
               type="button"
               className="button"
+              variant="contained"
               onClick={() => openModal(removeFriendRequested.bind(null, user.id, id))}
             >
-              Remove from friends
-            </button>
+              Remove
+              <DeleteIcon color="secondary" className={classes.rightIcon} /> 
+            </Button>
           </Person>
         )
       }
@@ -153,13 +233,14 @@ class Friends extends Component {
       return (
         <Person user={user} key={user.id}>
           {!friends.toJS().find(friend => friend.id === user.id) ? (
-            <button
+            <Button 
               type="button"
               className="button"
+              variant="contained"
               onClick={() => openModal(sendFriendshipRequested.bind(null, id, user.id, avatar, `${name} ${surname} wants to be your friend`))}
             >
-              Add to your friends
-            </button>
+              Add to friends
+            </Button> 
           ) : <h2 className="your-friend">Your friend</h2>}
         </Person>
       )
@@ -171,44 +252,44 @@ class Friends extends Component {
 
     return (
       <Fragment>
-        <nav className="navbar">
-          <ul>
-            <NavLink
-              className="nav-link"
-              to={`${match.url}/comrades`}
-              onClick={() => {
-                localStorage.setItem('searchUser', '')
-                fetchUserRequested(localStorage.getItem('searchUser'))
-              }}
+            <Tabs
+              value={this.state.value}
+              onChange={this.handleChange}
+              classes={{ root: classes.tabsRoot, indicator: classes.tabsIndicator, flexContainer: classes.flexContainer }}
             >
-              Friends
-            </NavLink>
-            <NavLink
-              className="nav-link"
-              to={`${match.url}/users`}
-              onClick={() => {
-                localStorage.setItem('searchUser', '')
-                fetchUserRequested(localStorage.getItem('searchUser'))
-              }}
-            >
-             All Users
-            </NavLink>
-          </ul>
-        </nav>
+              <Tab label="Friends" className={classes.tabRoot}
+                onClick={() => {
+                  history.push(`${match.url}/comrades`)
+                  localStorage.setItem('searchUser', '')
+                  fetchUserRequested(localStorage.getItem('searchUser'))
+                }} />
+              <Tab label="People" className={classes.tabRoot}
+                onClick={() => {
+                  history.push(`${match.url}/users`)
+                  localStorage.setItem('searchUser', '')
+                  fetchUserRequested(localStorage.getItem('searchUser'))
+                }} />
+            </Tabs>
         <Switch>
           <Route path={`${match.url}/comrades`}
             render={() => (
               <Fragment>
-                <div className="input-wrapper">
-                  <input
-                    type="search"
+                <div className={classes.search}>
+                  <div className={classes.searchIcon}>
+                    <SearchIcon />
+                  </div>
+                  <InputBase
                     className="search-input"
                     id="friends-search"
-                    placeholder="Find a friend"
+                    placeholder="Search…"
                     defaultValue={localStorage.getItem('searchUser')}
                     onChange={(e) => {
                       localStorage.setItem('searchUser', e.target.value.trim());
                       fetchUserRequested(localStorage.getItem('searchUser'))
+                    }}
+                    classes={{
+                      root: classes.inputRoot,
+                      input: classes.inputInput,
                     }}
                   />
                 </div>
@@ -220,17 +301,25 @@ class Friends extends Component {
             path={`${match.url}/users`}
             render={() => (
               <Fragment>
-                <input
-                  type="search"
-                  className="search-input"
+                <div className={classes.search}>
+                  <div className={classes.searchIcon}>
+                    <SearchIcon />
+                  </div>
+                  <InputBase
                   id="users-search"
-                  placeholder="Find a user"
-                  defaultValue={localStorage.getItem('searchUser')}
-                  onChange={(e) => {
-                    localStorage.setItem('searchUser', e.target.value.trim())
-                    fetchUserRequested(localStorage.getItem('searchUser'))
-                  }}
-                />
+                    placeholder="Search…"
+                    defaultValue={localStorage.getItem('searchUser')}
+                    className="search-input"
+                    onChange={(e) => {
+                      localStorage.setItem('searchUser', e.target.value.trim())
+                      fetchUserRequested(localStorage.getItem('searchUser'))
+                    }}
+                    classes={{
+                      root: classes.inputRoot,
+                      input: classes.inputInput,
+                    }}
+                  />
+                </div>
                 <ul className="users-list" onScroll={this.handleScroll}>{usersList}</ul>
               </Fragment>
             )}
@@ -245,6 +334,8 @@ Friends.defaultProps = {
   searchResult: List(),
   idOfLastUserInDB: ''
 }
+
+const customizedFriends = withStyles(styles)(Friends)
 
 const mapStateToProps = state => ({
   userData: state.getIn(['global', 'userData']),
@@ -273,4 +364,4 @@ export default connect(
       onConfirm: (arg) => func(arg)
     })
   }
-)(Friends)
+)(customizedFriends)

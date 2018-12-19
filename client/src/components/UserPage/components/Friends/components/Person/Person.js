@@ -5,12 +5,14 @@ import { connect } from 'react-redux'
 
 function Person({user, userEmail, children }) {
   const {
+    id,
     name,
     surname,
     email,
     birth,
     avatar,
-    gender
+    gender,
+    country
   } = user
   const avatarBg = avatar && avatar[0] === '#' ?
     { backgroundColor: avatar } :
@@ -21,12 +23,14 @@ function Person({user, userEmail, children }) {
       <Link to={{
         pathname: `/user-page/${userEmail}/profile-of-${email}`,
         state: {
+          id,
           name,
           surname,
           email,
           birth,
           avatar,
-          gender
+          gender,
+          country
         }
       }}
       >

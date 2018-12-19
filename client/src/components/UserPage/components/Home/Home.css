@@ -1,16 +1,16 @@
 .profile-header {
-    display: flex;
-    align-items: center;
     padding: 20px;
-    background: #474F56;
-    color: #fff;
+    color: #000;
     position: relative;
+    border-right: 1px solid #e8e8e8;
+    width: 30%;
+    height: 100%;
 }
 
 .avatar {
     width: 150px;
     height: 150px;
-    margin-right: 50px;
+    margin: 0 auto 30px;
     border-radius: 50%;
     background: #AEB6BE;
     box-shadow: 0 0 6px #1B2024;
@@ -19,15 +19,20 @@
     background-position: center;
 }
 
+.name-surname {
+    text-align: center;
+    margin-bottom: 40px;
+    font-weight: 500;
+    text-transform: uppercase;
+}
+
 .info {
-    padding: 5px 10px;
     background: #ffffff5b;
-    position: absolute;
     bottom: 0;
     right: 0;
     z-index: 1;
-    width: 45%;
     height: 100%;
+    width: 100%;
 }
 
 .info::before {
@@ -48,5 +53,29 @@
 }
 
 .info > li span {
-    font-weight: bold;
+    font-weight: 500;
+}
+
+#posts {
+    height: 100%;
+    width: 70%;
+    padding: 20px;
+    background: #aeb6be0f;
+    overflow: auto;
+    box-shadow: inset 0 0 13px #e8e8e8b8;
+}
+.post-list {
+}
+
+.post-text {
+    font-size: 16px;
+}
+
+.post-date {
+    position: absolute;
+    font-size: 11px;
+    color: rgb(182, 182, 182);
+    right: 10px;
+    bottom: 5px;
+    padding: 4px 7px;
 }

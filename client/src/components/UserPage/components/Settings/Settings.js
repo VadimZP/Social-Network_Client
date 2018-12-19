@@ -1,11 +1,47 @@
 import React, { Component } from 'react'
+import Input from '@material-ui/core/Input'
+import TextField from '@material-ui/core/TextField'
+import Select from '@material-ui/core/Select'
+import MenuItem from '@material-ui/core/MenuItem'
+import FormControlLabel from '@material-ui/core/FormControlLabel'
+import Radio from '@material-ui/core/Radio'
+import Button from '@material-ui/core/Button'
+import { withStyles } from '@material-ui/core/styles'
 import { connect } from 'react-redux'
 
 import './Settings.css'
 import Utils from 'utils/Utils'
-import { changeSettingsRequested, uploadAvatarRequested } from 'redux/modules/global'
 import * as Countries from 'iso-3166-1-alpha-2'
+import { changeSettingsRequested, uploadAvatarRequested } from 'redux/modules/global'
 
+
+const styles = theme => ({
+  textField: {
+    width: '100%',
+    marginBottom: 20,
+  },
+  select: {
+    width: '100%',
+    marginBottom: 60
+  },
+  cssLabel: {
+    '&$cssFocused': {
+      color: '#34495E',
+    },
+  },
+  cssFocused: {},
+  cssUnderline: {
+    '&:before': {
+      borderBottomColor: '#cdcdcd',
+    },
+    '&:after': {
+      borderBottomColor: '#34495E',
+    },
+  },
+  cssRadio: {
+    color: '#34495E',
+  }
+})
 
 class Settings extends Component {
   state = {
@@ -85,8 +121,9 @@ class Settings extends Component {
 
   countryChange = e => {
     e.persist()
+    const country = Utils.getCountries().find(item => item.alpha2Code === e.target.value)
     this.setState(prevState => ({
-      userData: { ...prevState.userData, country: e.target.options[e.target.selectedIndex].text }
+      userData: { ...prevState.userData, country: country.name }
     }))
   }
 
@@ -138,6 +175,8 @@ class Settings extends Component {
       passErr
     } = this.state
 
+    const { classes } = this.props
+
     if (!email ||
       (!name || name.length < 2) ||
       (!surname || surname.length < 2)
@@ -167,30 +206,66 @@ class Settings extends Component {
           </div>
         </div>
         <div className="user-data">
-          <div className="input-wrapper">
-            <h3>Name</h3>
-            <input
-              type="text"
-              id="inputName"
-              value={name}
-              onChange={this.nameChange}
-            />
-          </div>
-          <div className="input-wrapper">
-            <h3>Surame</h3>
-            <input
-              type="text"
+          <div className="column item-1">
+              <TextField
+                id="inputName"
+                label="Name"
+                className={classes.textField}
+                InputLabelProps={{
+                  classes: {
+                    root: classes.cssLabel,
+                    focused: classes.cssFocused,
+                  },
+                }}
+                InputProps={{
+                  classes: {
+                    focused: classes.cssFocused,
+                    underline: classes.cssUnderline,
+                  },
+                }}
+                value={name}
+                onChange={this.nameChange}
+                margin="normal"
+              />
+          <TextField
               id="inputSurname"
+              label="Surname"
+              className={classes.textField}
+              InputLabelProps={{
+                classes: {
+                  root: classes.cssLabel,
+                  focused: classes.cssFocused,
+                },
+              }}
+              InputProps={{
+                classes: {
+                  focused: classes.cssFocused,
+                  underline: classes.cssUnderline,
+                },
+              }}
               value={surname}
               onChange={this.surnameChange}
+              margin="normal"
             />
-          </div>
-          <div className="input-wrapper">
-            <h3>Email</h3>
             {emailErr && <p style={{ color: 'red', fontSize: 13, paddingTop: 5 }}>Empty or incorrect input</p>}
-            <input
-              type="email"
+            <TextField
               id="inputEmail"
+              type="email"
+              label="Email"
+              autoComplete="new-password"
+              className={classes.textField}
+              InputLabelProps={{
+                classes: {
+                  root: classes.cssLabel,
+                  focused: classes.cssFocused,
+                },
+              }}
+              InputProps={{
+                classes: {
+                  focused: classes.cssFocused,
+                  underline: classes.cssUnderline,
+                },
+              }}
               value={email}
               onChange={this.emailChange}
               onBlur={() => {
@@ -201,14 +276,26 @@ class Settings extends Component {
                 }
                 this.setState({ emailErr: false })
               }}
+              margin="normal"
             />
-          </div>
-          <div className="input-wrapper">
-            <h3>Password</h3>
             {passErr && <p style={{ color: 'red', fontSize: 13, paddingTop: 5 }}>Empty or too short input</p>}
-            <input
-              type="password"
+            <TextField
               id="inputPassword"
+              label="Password"
+              className={classes.textField}
+              InputLabelProps={{
+                classes: {
+                  root: classes.cssLabel,
+                  focused: classes.cssFocused,
+                },
+              }}
+              InputProps={{
+                classes: {
+                  focused: classes.cssFocused,
+                  underline: classes.cssUnderline,
+                },
+              }}
+              type="password"
               onChange={this.passwordChange}
               onBlur={() => {
                 if (!password.length) {
@@ -217,88 +304,127 @@ class Settings extends Component {
                 }
                 this.setState({ passErr: false })
               }}
+              margin="normal"
             />
           </div>
-          <div className="select-wrapper">
-            <span>Birthday:</span>
-            <select
-              name="day"
-              selected={31}
-              onChange={this.birthChange.bind(this, 'day')}
-              defaultValue={birth.day}
-            >
-              {Utils.getDays().map(d => (
-                <option value={d} key={d}>
-                  {d}
-                </option>
-              ))}
-            </select>
-            <select
-              name="month"
-              onChange={this.birthChange.bind(this, 'month')}
-              defaultValue={birth.month}
-            >
-              {Utils.getMonths().map(m => (
-                <option value={m} key={m}>
-                  {m}
-                </option>
-              ))}
-            </select>
-            <select
-              name="years"
-              onChange={this.birthChange.bind(this, 'year')}
-              defaultValue={birth.year}
-            >
-              {Utils.getYears().map(y => (
-                <option value={y} key={y}>
-                  {y}
-                </option>
-              ))}
-            </select>
-            <select
-              name="countries"
-              onChange={this.countryChange}
-              defaultValue={Countries.getCode(country)}
-            >
-              {Utils.getCountries().map(item => (
-                <option value={item.alpha2Code} key={item.name}>
-                  {item.name}
-                </option>
-              ))}
-            </select>
-          </div>
-          <div className="radio-wrapper">
-            <input
-              type="radio"
-              name="gender"
-              value="male"
-              checked={gender === 'male' && true}
-              onChange={this.genderChange}
-            />
-            Male
-            <input
-              type="radio"
-              name="gender"
-              value="female"
-              checked={gender === 'female' && true}
-              onChange={this.genderChange}
-            />
-            Female
+          <div className="column item-2">
+            <div className="select-wrapper">
+              <div className="location-select-wrapper">
+                <span className="location-pseudo-label">Location</span>
+                <Select
+                  name="countries"
+                  className={classes.select}
+                  value={Countries.getCode(country)}
+                  onChange={this.countryChange}
+                  input={<Input classes={{
+                    focused: classes.cssFocused,
+                    underline: classes.cssUnderline,
+                  }} />}
+                >
+                  {Utils.getCountries().map(item => (
+                    <MenuItem key={item.alpha2Code} value={item.alpha2Code}>{item.name}</MenuItem>
+                  ))}
+                </Select>
+              </div>
+              <div className="birth-select-wrapper">
+                <span className="birth-pseudo-label">Birth</span>
+                <Select
+                  name="day"
+                  value={birth.day}
+                  style={{ width: 'calc(33.3% - 20px)', marginRight: 20 }}
+                  onChange={this.birthChange.bind(this, 'day')}
+                  input={<Input classes={{
+                    focused: classes.cssFocused,
+                    underline: classes.cssUnderline,
+                  }} />}
+                >
+                  {Utils.getDays().map(d => (
+                    <MenuItem key={d} value={d}>{d}</MenuItem>
+                  ))}
+                </Select>
+                <Select
+                  name="month"
+                  value={birth.month}
+                  style={{ width: 'calc(33.3% - 20px)', marginRight: 20 }}
+                  onChange={this.birthChange.bind(this, 'month')}
+                  input={<Input classes={{
+                    focused: classes.cssFocused,
+                    underline: classes.cssUnderline,
+                  }} />}
+                >
+                  {Utils.getMonths().map(m => (
+                    <MenuItem key={m} value={m}>{m}</MenuItem>
+                  ))}
+                </Select>
+                <Select
+                name="years"
+                value={birth.year}
+                style={{width: 'calc(33.3% - 20px)', marginLeft: 20}}
+                onChange={this.birthChange.bind(this, 'year')}
+                input={<Input classes={{
+                  focused: classes.cssFocused,
+                  underline: classes.cssUnderline,
+                }} />}
+              >
+                  {Utils.getYears().map(y => (
+                    <MenuItem key={y} value={y}>{y}</MenuItem>
+                  ))}
+                </Select>
+              </div>
+            </div>
+            <div className="gender-radio-wrapper">
+            <span className="gender-pseudo-label">Gender</span>
+              <FormControlLabel
+                value="male"
+                style={{ margin: 0 }}
+                control={
+                  <Radio
+                    name="gender"
+                    checked={gender === 'male' && true}
+                    onChange={this.genderChange}
+                    color="default"
+                    classes={{
+                      root: classes.cssRadio,
+                    }}
+                  />
+                }
+                label="Male"
+                labelPlacement="start"
+              />
+              <FormControlLabel
+                value="female"
+                control={
+                <Radio 
+                  name="gender"
+                  color="default"
+                  checked={gender === 'female' && true}
+                  onChange={this.genderChange} 
+                  classes={{
+                    root: classes.cssRadio,
+                  }}
+                />}
+                label="Female"
+                labelPlacement="start"
+              />
+            </div>
           </div>
         </div>
-        <button
+        <Button
           type="button"
+          variant="contained"
           className="btn-submit-settings"
           style={isDisabled ? { background: '#f1f1f1' } : {}}
           onClick={this.submitSettingsChanges}
           disabled={isDisabled}
         >
           Save changes
-        </button>
+        </Button>
       </div>
     )
   }
 }
+
+const customizedSettings = withStyles(styles)(Settings)
 
 const mapStateToProps = state => ({
   userData: state.getIn(['global', 'userData'])
@@ -310,4 +436,4 @@ export default connect(
     changeSettingsRequested,
     uploadAvatarRequested
   }
-)(Settings)
+)(customizedSettings)

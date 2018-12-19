@@ -53,6 +53,7 @@ class Enter extends Component {
       <div className="enter">
         <header className="enter-header">
           <div
+            style={{ outline: 'none' }}
             onKeyDown={e => this.handleKeyDown(e)}
             onClick={() => this.setState({ componentBody: 'register' })}
             className={
@@ -64,6 +65,7 @@ class Enter extends Component {
             Register
           </div>
           <div
+            style={{ outline: 'none' }}
             onKeyDown={e => this.handleKeyDown(e)}
             onClick={() => this.setState({ componentBody: 'sign-in' })}
             className={

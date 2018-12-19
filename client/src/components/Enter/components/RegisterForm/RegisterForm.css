@@ -5,57 +5,54 @@
     text-align: left;
 }
 
-.form-register input {
-    margin: 10px 0;
-    padding: 10px 5px;
-    border: none;
-    background: #F1F3F5;
-    border-radius: 3px;
-}
-
-.form-register label {
+.form-register .gender-radio-wrapper{
     position: relative;
-    /* top: 35px; */
+    margin: 30px 0;
 }
 
-.radio-wrapper input{
-    margin-right: 5px;
-    margin-left: 30px;
+.form-register .gender-pseudo-label {
+    color: rgba(0, 0, 0, 0.54);
+    padding: 0;
+    font-size: 12px;
+    line-height: 1;
+    position: absolute;
+    left: 0;
+    top: -20px;
 }
 
-.radio-wrapper input:first-child{
-    margin-left: 0;
+.form-register .birth-select-wrapper {
+    position: relative;
+    margin-bottom: 50px;
 }
 
-.select-wrapper {
-    margin: 10px 0; 
+.form-register .birth-pseudo-label {
+    color: rgba(0, 0, 0, 0.54);
+    padding: 0;
+    font-size: 12px;
+    line-height: 1;
+    position: absolute;
+    left: 0;
+    top: -20px;
 }
 
-.select-wrapper select{
-    padding: 5px;
+.form-register .location-select-wrapper {
+    position: relative;
 }
 
-.select-wrapper span{
-    margin-right: 20px;
+.form-register .location-pseudo-label {
+    color: rgba(0, 0, 0, 0.54);
+    padding: 0;
+    font-size: 12px;
+    line-height: 1;
+    position: absolute;
+    left: 0;
+    top: -20px;
+}
+
+.form-register input {
+    border: none;
 }
 
 .btn-submit-form {
-    border: none;
-    border-radius: 3px;
-    background: #474F56;
-    color: #fff;
-    padding: 10px 0;
-    font-weight: bold;
-    width: 40%;
-    margin: 20px auto 0;
-    cursor: pointer;
-    font-size: 15px;
-    box-shadow: 0 0 2px rgb(194, 194, 194);
-    text-transform: uppercase;
-}
-
-.btn-submit-form:hover {
-    background: rgb(90, 88, 88);
-    color: #fff;
-    transition: 200ms;
+    width: 150px;
 }

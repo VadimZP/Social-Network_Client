@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react'
+import ListItem from '@material-ui/core/ListItem';
 import PropTypes from 'prop-types'
 
 import DialogContainer from './components/DialogContainer/DialogContainer'
@@ -32,14 +33,15 @@ function compare(a, b) {
     <Fragment>
       <ul className="conversations">
         {opts.sort(compare).map((item, i) => (
-          <Letter
-            letter={item.slice(-1)[0]}
-            msgId={item[0].receiver_id === userId ? item[0].sender_id : item[0].receiver_id}
-            interlocutorAvatar={item[0].receiver_id === userId ? avatars[item[0].sender_id] : avatars[item[0].receiver_id]}
-            getDialogWithId={getDialogWithId}
-            key={keys[i]}
-          />
-
+          // <ListItem className="listItem" style={{ padding: 0 }} button>
+            <Letter
+              letter={item.slice(-1)[0]}
+              msgId={item[0].receiver_id === userId ? item[0].sender_id : item[0].receiver_id}
+              interlocutorAvatar={item[0].receiver_id === userId ? avatars[item[0].sender_id] : avatars[item[0].receiver_id]}
+              getDialogWithId={getDialogWithId}
+              key={keys[i]}
+            />
+          // </ListItem>
         ))}
       </ul>
       {dialogContent.length ? (
@@ -49,7 +51,7 @@ function compare(a, b) {
           })}
         </DialogContainer>
       ) : (
-          <p>Select a dialog</p>
+          <p style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%', color: 'rgba(0, 0, 0, 0.75)' }}>Select a dialog</p>
       )}
     </Fragment>
   )

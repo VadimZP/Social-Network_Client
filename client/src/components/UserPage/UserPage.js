@@ -4,6 +4,8 @@ import PropTypes from 'prop-types'
 import { Switch, Route } from 'react-router'
 import { connect } from 'react-redux'
 import io from 'socket.io-client'
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
 
 import { getFriendsRequested } from 'redux/modules/friends'
 import { getUserNotificationsRequested } from 'redux/modules/messages'
@@ -15,7 +17,7 @@ import Settings from './components/Settings/Settings'
 import Friends from './components/Friends/Friends'
 import Messages from './components/Messages/Messages'
 
-const socket = io('/')
+// const socket = io('/')
 
 class UserPage extends Component {
   state = {
@@ -29,7 +31,7 @@ class UserPage extends Component {
     getUserNotificationsRequested(userId)
     getFriendsRequested(userId)
 
-    socket.on(
+  /*   socket.on(
       userId,
       ({ type, receiver_id }) => {
         if (userId === receiver_id && type === 'message' && this.props.location.pathname.split('/').pop() !== 'conversations') {
@@ -43,7 +45,7 @@ class UserPage extends Component {
           })
         }
       }
-    )
+    ) */
   }
 
   logOut = () => {
@@ -63,42 +65,46 @@ class UserPage extends Component {
       <div className="page-wrapper">
         <aside className="navigation">
           <ul>
-            <NavLink className="nav-link" to={`${match.url}/home`}>
-              <div className="the-icons span3">
-                <i className="fontello-icon icon-home" />
-              </div>
-              Home
+            <NavLink className="nav-link" activeClassName="active-link" to={`${match.url}/home`}>
+              <ListItem className="listItem" style={{borderTopLeftRadius: 5}} button>
+                <div className="the-icons span3">
+                  <i className="fontello-icon icon-home" />
+                </div>
+                <ListItemText className="list-item-text" primary="Home" />
+              </ListItem>
             </NavLink>
-            <NavLink className="nav-link" to={`${match.url}/messages`} onClick={() => this.setState({ unreadMessage: 0 }, () => localStorage.setItem('messageCounter', 0))}>
-              <div className="the-icons span3">
-                <i className="fontello-icon icon-mail-alt" />
-                { (unreadMessage !== 0 || unreadNotification !== 0) && <span className="message-counter">{unreadMessage + unreadNotification}</span>}
-              </div>
-              Messages
+            <NavLink className="nav-link" activeClassName="active-link" to={`${match.url}/messages`} onClick={() => this.setState({ unreadMessage: 0 }, () => localStorage.setItem('messageCounter', 0))}>
+              <ListItem className="listItem" button>
+                <div className="the-icons span3">
+                  <i className="fontello-icon icon-mail-alt" />
+                  {(unreadMessage !== 0 || unreadNotification !== 0) && <span className="message-counter">{unreadMessage + unreadNotification}</span>}
+                </div>
+                <ListItemText className="list-item-text" primary="Messages" />
+              </ListItem>
             </NavLink>
-            <NavLink className="nav-link" to={`${match.url}/friends`}>
-              <div className="the-icons span3">
-                <i className="fontello-icon icon-users" />
-              </div>
-              Friends
+            <NavLink className="nav-link" activeClassName="active-link" to={`${match.url}/friends`}>
+              <ListItem className="listItem" button>
+                <div className="the-icons span3">
+                  <i className="fontello-icon icon-users" />
+                </div>
+                <ListItemText className="list-item-text" primary="Friends" />
+              </ListItem>
             </NavLink>
-            <NavLink className="nav-link" to={`${match.url}/settings`}>
-              <div className="the-icons span3">
+            <NavLink className="nav-link" activeClassName="active-link"  to={`${match.url}/settings`} activeClassName="active-link">
+               <ListItem className="listItem" button>
+               <div className="the-icons span3">
                 <i className="fontello-icon icon-cog" />
               </div>
-              Settings
+                <ListItemText className="list-item-text" primary="Settings" />
+              </ListItem>
             </NavLink>
           </ul>
-          <button
-            type="button"
-            className="btn-submit-logout"
-            onClick={this.logOut}
-          >
+          <ListItem button className="btn-submit-logout" onClick={this.logOut}>
             <div className="the-icons span3">
               <i className="fontello-icon icon-logout" />
             </div>
-            Log out
-          </button>
+            <ListItemText className="list-item-text" primary="Log out" />
+          </ListItem>
         </aside>
         <div className="content-container" onScroll={this.handleScroll}>
           <Switch>
