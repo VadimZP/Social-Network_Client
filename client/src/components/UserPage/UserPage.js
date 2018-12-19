@@ -17,7 +17,7 @@ import Settings from './components/Settings/Settings'
 import Friends from './components/Friends/Friends'
 import Messages from './components/Messages/Messages'
 
-// const socket = io('/')
+const socket = io('/')
 
 class UserPage extends Component {
   state = {
@@ -31,7 +31,7 @@ class UserPage extends Component {
     getUserNotificationsRequested(userId)
     getFriendsRequested(userId)
 
-  /*   socket.on(
+    socket.on(
       userId,
       ({ type, receiver_id }) => {
         if (userId === receiver_id && type === 'message' && this.props.location.pathname.split('/').pop() !== 'conversations') {
@@ -45,7 +45,7 @@ class UserPage extends Component {
           })
         }
       }
-    ) */
+    )
   }
 
   logOut = () => {

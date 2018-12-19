@@ -11,7 +11,7 @@ import { withStyles } from '@material-ui/core/styles'
 import { sendMessageRequested } from 'redux/modules/messages'
 import Dialog from '../Dialog/Dialog'
 
-// const socket = io('/')
+const socket = io('/')
 
 const styles = theme => ({})
 
@@ -40,7 +40,7 @@ class DialogContainer extends Component {
   }
 
   componentDidMount() {
-    /* socket.on(
+    socket.on(
       this.props.userData.get('id'),
       ({ receiver_id, sender_id, text, sender_name, sender_surname, date }) => {
         if (this.dialogContainerEl !== null) {
@@ -67,7 +67,7 @@ class DialogContainer extends Component {
           }
         }
       }
-    ) */
+    )
   }
 
   componentDidUpdate(prevProps, prevState) {

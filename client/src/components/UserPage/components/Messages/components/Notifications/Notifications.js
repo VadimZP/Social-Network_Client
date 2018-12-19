@@ -5,7 +5,7 @@ import io from 'socket.io-client'
 import './Notifications.css'
 import { acceptFriendshipRequested, rejectFriendshipRequested, getUserNotificationsRequested } from 'redux/modules/messages'
 
-// const socket = io('/')
+const socket = io('/')
 
 class Notifications extends Component {
   state = {
@@ -16,7 +16,7 @@ class Notifications extends Component {
     const { getUserNotificationsRequested, acceptFriendshipRequested, rejectFriendshipRequested, userId } = this.props
 
     getUserNotificationsRequested(userId)
-   /*  socket.on(
+    socket.on(
       userId,
       ({receiver_id, sender_id, avatar, text }) => {
         if (this.notificationsContainerEl !== null) {
@@ -41,7 +41,7 @@ class Notifications extends Component {
           }
         }
       }
-    ) */
+    )
   }
 
   render() {

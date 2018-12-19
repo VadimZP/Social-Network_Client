@@ -4,7 +4,7 @@ import io from 'socket.io-client'
 
 import { getFriendsRequest, postFriendshipRequest, deleteFriendRequest } from 'utils/api'
 
-// const socket = io('/')
+const socket = io('/')
 
 // Actions
 export const types = {
@@ -33,7 +33,7 @@ export function getFriendsFailed() {
 }
 
 export function sendFriendshipRequested( sender_id, receiver_id, avatar, text) {
-  // socket.emit('appendNotification', { sender_id, receiver_id, avatar, text })
+  socket.emit('appendNotification', { sender_id, receiver_id, avatar, text })
   return { type: types.SEND_FRIENDSHIP_REQUESTED, sender_id, receiver_id, avatar, text }
 }
 

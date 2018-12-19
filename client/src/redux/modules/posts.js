@@ -1,6 +1,5 @@
 import { fromJS } from 'immutable'
 import { call, put } from 'redux-saga/effects'
-import io from 'socket.io-client'
 
 import {
   getPostsRequest,
@@ -9,8 +8,6 @@ import {
   deletePostRequest,
   editPostRequest
 } from 'utils/api'
-
-// const socket = io('/')
 
 // Actions
 export const types = {

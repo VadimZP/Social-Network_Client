@@ -5,7 +5,7 @@ import io from 'socket.io-client'
 import { getUserMsgsRequest, sendMsgRequest, getUserNotificationsRequest, acceptFriendshipRequest, rejectFriendshipRequest, getFriendsRequest } from 'utils/api'
 import { types as friendsType } from './friends'
 
-// const socket = io('/')
+const socket = io('/')
 
 // Actions
 export const types = {
@@ -61,7 +61,7 @@ export function sendMessageRequested(
 }
 
 export function sendMsgSucceed(message) {
-  // socket.emit('appendMessage', message)
+  socket.emit('appendMessage', message)
   return { type: types.SEND_MSG_SUCCEED, message }
 }
 
