@@ -124,7 +124,6 @@ export default function posts(state = initialState, action) {
       return state
     case types.EDIT_POST_SUCCEED:
       const postIndex = state.findIndex(item => item.get('id') == action.post_id)
-      console.log(action)
       return state.setIn([postIndex, 'text'], action.text);
     case types.EDIT_POST_FAILED:
       return state

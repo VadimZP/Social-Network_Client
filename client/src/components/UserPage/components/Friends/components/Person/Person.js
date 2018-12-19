@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 
 function Person({user, userEmail, children }) {
   const {
+    id,
     name,
     surname,
     email,
@@ -22,6 +23,7 @@ function Person({user, userEmail, children }) {
       <Link to={{
         pathname: `/user-page/${userEmail}/profile-of-${email}`,
         state: {
+          id,
           name,
           surname,
           email,

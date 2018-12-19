@@ -1,5 +1,6 @@
 import React, { Fragment, Component } from 'react'
 import PropTypes from 'prop-types'
+import { fromJS } from 'immutable'
 import moment from 'moment'
 import uuid from 'uuid'
 import TextField from '@material-ui/core/TextField'
@@ -47,14 +48,27 @@ const styles = theme => ({
 
 class Home extends Component {
 
-  componentDidMount() {
+  componentDidUpdate(prevProps, prevState) {
     const { userData, getPostsRequested } = this.props
 
-    getPostsRequested(userData.get('id'))
+    if(this.props.location.state !== prevProps.location.state) {
+      getPostsRequested(userData.get('id'))
+    }
+  }
+
+  componentDidMount() {
+    const { userData, getPostsRequested, location } = this.props
+
+    const anotherProfile = location.state
+
+    const { id } = anotherProfile || userData.toJS()
+
+    getPostsRequested(id)
   }
 
   render() {
-    const { posts, userData, location, classes, openModal, getPostsRequested, getPostRequested, addPostRequested } = this.props
+    const { posts, userData, location, classes, openModal, addPostRequested } = this.props
+    // const { posts } = this.state
 
     const anotherProfile = location.state
 
