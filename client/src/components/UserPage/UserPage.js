@@ -4,8 +4,9 @@ import PropTypes from 'prop-types'
 import { Switch, Route } from 'react-router'
 import { connect } from 'react-redux'
 import io from 'socket.io-client'
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
+import ListItem from '@material-ui/core/ListItem'
+import ListItemText from '@material-ui/core/ListItemText'
+import Badge from '@material-ui/core/Badge'
 
 import { getFriendsRequested } from 'redux/modules/friends'
 import { getUserNotificationsRequested } from 'redux/modules/messages'
@@ -77,7 +78,7 @@ class UserPage extends Component {
               <ListItem className="listItem" button>
                 <div className="the-icons span3">
                   <i className="fontello-icon icon-mail-alt" />
-                  {(unreadMessage !== 0 || unreadNotification !== 0) && <span className="message-counter">{unreadMessage + unreadNotification}</span>}
+                  {(unreadMessage !== 0 || unreadNotification !== 0) && <Badge badgeContent={unreadMessage + unreadNotification} style={{ position: 'absolute', fontSize: 12, left: 17, }} color="secondary" />}
                 </div>
                 <ListItemText className="list-item-text" primary="Messages" />
               </ListItem>

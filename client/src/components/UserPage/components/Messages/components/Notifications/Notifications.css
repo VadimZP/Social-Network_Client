@@ -1,31 +1,42 @@
-.notifications > ul {
+.notification-container {
   width: 100%;
 }
 
+
 .notifications > li {
   align-items: center;
-  padding: 15px;
+  padding: 20px;
   display: flex;
+  box-shadow: 0 1px 12px #cecece;
+  margin: 20px;
+  border-bottom: 2px solid #e7e7e7;
+  border-radius: 8px;
+  background: #fff;
 }
 
 .notifications > li:nth-child(even) {
-  background: #f1f3f5;
+  background: #363647;
+  color: #fff;
+  box-shadow: 0 1px 12px #363647;
+  border-bottom: 2px solid #363647;
 }
 
 .notifications > li button {
   min-width: 130px;
-  border: none;
-  border-radius: 3px;
-  background: #474f56;
-  color: #fff;
-  cursor: pointer;
-  -webkit-box-shadow: 0 0 2px rgb(194, 194, 194);
-  box-shadow: 0 0 2px rgb(194, 194, 194);
-  font-size: 15px;
-  padding: 5px;
   margin: 0 5px;
+  text-transform: initial;
+  font-weight: normal;
+  font-size: 15px;
 }
 
-.notifications > li button:first-child {
-  margin-left: 50px;
+.notifications > li .avatar {
+  margin: 0 50px 0 0;
+}
+
+.notifications > li button:first-of-type {
+  margin-left: 30px;
+}
+
+.notifications > li button {
+  margin-left: 20px;
 }

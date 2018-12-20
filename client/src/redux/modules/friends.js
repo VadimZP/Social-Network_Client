@@ -49,8 +49,8 @@ export function removeFriendRequested(friendId, userId) {
   return { type: types.REMOVE_FRIEND_REQUESTED, friendId, userId }
 }
 
-export function removeFriendSucceed() {
-  return { type: types.REMOVE_FRIEND_SUCCEED }
+export function removeFriendSucceed(friendId) {
+  return { type: types.REMOVE_FRIEND_SUCCEED, friendId }
 }
 
 export function removeFriendFailed() {
@@ -109,9 +109,9 @@ export function* postFriendship(action) {
 export function* deleteFriend(action) {
   try {
     const result = yield call(deleteFriendRequest, action.friendId, action.userId)
-    // const response = yield result.json()
+    const response = yield result.json()
 
-    yield put(removeFriendSucceed(/* response[0] */))
+    yield put(removeFriendSucceed(action.friendId))
   } catch (error) {
     yield put(removeFriendFailed())
   }

@@ -189,6 +189,7 @@ class Settings extends Component {
 
     const avatar = this.props.userData.get('avatar')
     const avatarBg = avatar[0] === '#' ? { backgroundColor: avatar } : { backgroundImage: `url(${avatar})` }
+
     return (
       <div className="settings">
         <div

@@ -13,6 +13,7 @@ import { withRouter } from 'react-router-dom'
 
 import './RegisterForm.css'
 import Utils from 'utils/Utils'
+import * as Countries from 'iso-3166-1-alpha-2'
 import { userRegistrationRequested } from 'redux/modules/global'
 import RegisterResult from './components/RegisterResult/RegisterResult'
 
@@ -164,6 +165,7 @@ class RegisterForm extends Component {
       name,
       surname,
       gender,
+      country
     } = this.state.userData
 
     const {
@@ -193,6 +195,7 @@ class RegisterForm extends Component {
               label={emailErr ? "Empty or incorrect email" : "Email"}
               type="email"
               autoComplete="new-password"
+              style={{marginTop: 0}}
               className={classes.textField}
               InputLabelProps={{
                 classes: {
@@ -284,7 +287,7 @@ class RegisterForm extends Component {
               margin="normal"
             />
           <div className="gender-radio-wrapper">
-           <span class="gender-pseudo-label">Gender</span>
+          <span class="gender-pseudo-label">Gender</span>
           <FormControlLabel
                 value="male"
                 style={{ margin: 0 }}
@@ -322,7 +325,7 @@ class RegisterForm extends Component {
                 <span class="birth-pseudo-label">Birth</span>
                 <Select
                   name="day"
-                  value={1}
+                  value={this.state.userData.birth.day}
                   style={{ width: 'calc(33.3% - 20px)', marginRight: 20 }}
                   onChange={this.birthChange.bind(this, 'day')}
                   input={<Input classes={{
@@ -336,7 +339,7 @@ class RegisterForm extends Component {
                 </Select>
                 <Select
                   name="month"
-                  value={'January'}
+                  value={this.state.userData.birth.month}
                   style={{ width: 'calc(33.3% - 20px)', marginRight: 20 }}
                   onChange={this.birthChange.bind(this, 'month')}
                   input={<Input classes={{
@@ -350,7 +353,7 @@ class RegisterForm extends Component {
                 </Select>
                 <Select
                 name="years"
-                value={1980}
+                value={this.state.userData.birth.year}
                 style={{width: 'calc(33.3% - 20px)', marginLeft: 20}}
                 onChange={this.birthChange.bind(this, 'year')}
                 input={<Input classes={{
@@ -368,7 +371,7 @@ class RegisterForm extends Component {
                 <Select
                   name="countries"
                   className={classes.select}
-                  value={'AF'}
+                  value={Countries.getCode(country)}
                   onChange={this.countryChange}
                   input={<Input classes={{
                     focused: classes.cssFocused,

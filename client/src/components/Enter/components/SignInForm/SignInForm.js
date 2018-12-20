@@ -83,6 +83,7 @@ class SignInForm extends Component {
               label={emailErr ? "Empty or incorrect email" : "Email"}
               type="email"
               autoComplete="new-password"
+              style={{marginTop: 0}}
               className={classes.textField}
               InputLabelProps={{
                 classes: {

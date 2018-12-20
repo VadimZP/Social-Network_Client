@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import io from 'socket.io-client'
+import Button from '@material-ui/core/Button'
 
 import './Notifications.css'
 import { acceptFriendshipRequested, rejectFriendshipRequested, getUserNotificationsRequested } from 'redux/modules/messages'
@@ -61,8 +62,8 @@ class Notifications extends Component {
               <li key={item.sender_id}>
                 <div className="avatar" style={{...avatarBg, width: 60, height: 60 }} />
                 {item.text}
-                <button type="button" onClick={() => acceptFriendshipRequested(item.action_user_id, userId)}>Accept</button>
-                <button type="button" onClick={() => rejectFriendshipRequested(item.action_user_id, userId)}>Reject</button>
+                <Button variant="contained" type="button" onClick={() => acceptFriendshipRequested(item.action_user_id, userId)}>Accept</Button>
+                <Button variant="contained" type="button" onClick={() => rejectFriendshipRequested(item.action_user_id, userId)}>Reject</Button>
               </li>
             )
           })}
