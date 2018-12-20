@@ -4,6 +4,7 @@ import { Switch, Route } from 'react-router'
 import { connect } from 'react-redux'
 import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
+import Badge from '@material-ui/core/Badge'
 import { withStyles } from '@material-ui/core/styles'
 
 import { getUserMsgsRequested } from 'redux/modules/messages'
@@ -38,6 +39,7 @@ class Messages extends Component {
   state = {
     dialogContent: [],
     value: 0,
+    unreadNotification: +localStorage.getItem('notificationCounter') || 0
   }
 
   componentDidMount() {
@@ -89,7 +91,8 @@ class Messages extends Component {
       fullMessageHistory,
       dialogContent,
       avatars,
-      interlocutorId
+      interlocutorId,
+      unreadNotification
     } = this.state
 
     let keys
@@ -119,8 +122,10 @@ class Messages extends Component {
                   history.push(`${match.url}/conversations`)
                   this.props.onClick
                 }} />
+                {(unreadNotification !== 0) && <Badge badgeContent={unreadNotification} style={{ position: 'absolute', fontSize: 12, left: 17, }} color="secondary" />}
               <Tab label="Notifications" className={classes.tabRoot}
                 onClick={() => {
+                  this.setState({ unreadNotification: 0 }, () => localStorage.setItem('notificationCounter', 0))
                   history.push(`${match.url}/notifications`)
                   this.props.onClick
                 }} />
