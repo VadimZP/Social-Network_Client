@@ -74,7 +74,10 @@ class UserPage extends Component {
                 <ListItemText className="list-item-text" primary="Home" />
               </ListItem>
             </NavLink>
-            <NavLink className="nav-link" activeClassName="active-link" to={`${match.url}/messages`} onClick={() => this.setState({ unreadMessage: 0 }, () => localStorage.setItem('messageCounter', 0))}>
+            <NavLink className="nav-link" activeClassName="active-link" to={`${match.url}/messages`} onClick={() => this.setState({ unreadMessage: 0, unreadNotification: 0 }, () => {
+              localStorage.setItem('messageCounter', 0)
+              localStorage.setItem('notificationCounter', 0)
+              })}>
               <ListItem className="listItem" button>
                 <div className="the-icons span3">
                   <i className="fontello-icon icon-mail-alt" />
