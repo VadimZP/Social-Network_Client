@@ -6,14 +6,11 @@ import io from 'socket.io-client'
 import uuid from 'uuid'
 import moment from 'moment'
 import SendIcon from '@material-ui/icons/Send'
-import { withStyles } from '@material-ui/core/styles'
 
 import { sendMessageRequested } from 'redux/modules/messages'
 import Dialog from '../Dialog/Dialog'
 
 const socket = io('/')
-
-const styles = theme => ({})
 
 class DialogContainer extends Component {
   static propTypes = {
@@ -42,7 +39,8 @@ class DialogContainer extends Component {
   componentDidMount() {
     socket.on(
       this.props.userData.get('id'),
-      ({ receiver_id, sender_id, text, sender_name, sender_surname, date }) => {
+      ({ type, receiver_id, sender_id, text, sender_name, sender_surname, date }) => {
+        console.log(type)
         if (this.dialogContainerEl !== null) {
           const dialogContainerId = this.dialogContainerEl.id
 
@@ -149,7 +147,7 @@ class DialogContainer extends Component {
   }
 }
 
-const customizedDialogContainer = withStyles(styles)(DialogContainer)
+
 
 const mapStateToProps = state => ({
   userData: state.getIn(['global', 'userData']),
@@ -161,4 +159,4 @@ export default connect(
   {
     sendMessageRequested
   }
-)(customizedDialogContainer)
+)(DialogContainer)

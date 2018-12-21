@@ -54,6 +54,10 @@ class UserPage extends Component {
     window.location.reload()
   }
 
+  resetNotificCounter = () => {
+    this.setState({ unreadNotification: 0 }, () => localStorage.setItem('notificationCounter', 0))
+  }
+
   render() {
     const { location, match } = this.props
     const { unreadMessage, unreadNotification } = this.state
@@ -114,7 +118,7 @@ class UserPage extends Component {
             <Route path={`${match.url}/settings`} component={Settings} />
             <Route
               path={`${match.url}/messages`}
-              render={routeProps => <Messages onClick={() => this.setState({ unreadNotification: 0 }, () => localStorage.setItem('notificationCounter', 0))} {...routeProps} />}
+              render={routeProps => <Messages onClick={this.resetNotificCounter} {...routeProps} />}
             />
             <Route
               path={`${match.url}/profile-of-:email`}

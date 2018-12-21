@@ -19,6 +19,9 @@ io.on('connection', socket => {
     socket.on('appendNotification', notification => {
         io.emit(notification.receiver_id, {type: 'notification', ...notification})
     })
+    socket.on('removeFriend', data => {
+        io.emit(data.friendId, {type: 'removeFriend', ...data})
+    })
 })
 
 http.listen(port, () => console.log(`listening on *:${port}`))

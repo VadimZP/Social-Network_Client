@@ -46,6 +46,7 @@ export function sendFriendshipFailed() {
 }
 
 export function removeFriendRequested(friendId, userId) {
+  socket.emit('removeFriend', { friendId, userId })
   return { type: types.REMOVE_FRIEND_REQUESTED, friendId, userId }
 }
 
