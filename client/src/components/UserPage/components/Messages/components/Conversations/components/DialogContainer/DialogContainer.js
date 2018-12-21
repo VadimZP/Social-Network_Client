@@ -103,7 +103,7 @@ class DialogContainer extends Component {
     this.setState({ message: '' })
     // if (this.state.notFriend) return
 
-    if (!friends.toJS().find(user => user.id === interlocutorId)) {
+    if (!friends.find(user => user.id === interlocutorId)) {
       this.setState({ notFriend: 'This user is not your friend' })
       return
     }
