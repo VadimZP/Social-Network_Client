@@ -38,6 +38,10 @@ class DialogContainer extends Component {
   }
 
   componentDidMount() {
+    const { interlocutorId } = this.props
+    const { friendList } = this.state
+    console.log(friendList)
+    console.log(this.state.friendList.findIndex(user => user.get('id') == interlocutorId))
     socket.on(
       this.props.userData.get('id'),
       ({ type, receiver_id, sender_id, text, sender_name, sender_surname, date }) => {
@@ -45,7 +49,7 @@ class DialogContainer extends Component {
           // this.setState({ notFriend: 'This user is not your friend' })
           const { interlocutorId } = this.props
           const { friendList } = this.state
-
+          console.log(friendList)
           const removedFriend = friendList.findIndex(user => user.get('id') == interlocutorId)
           const newFriendsList = friendList.filter(user => user.get('id') != removedFriend)
 

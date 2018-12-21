@@ -1,6 +1,6 @@
 export default class Http {
-  constructor(baseUrl = 'https://soc-net-api.herokuapp.com') {
-  // constructor(baseUrl = 'http://socialnetwork') {
+  // constructor(baseUrl = 'https://soc-net-api.herokuapp.com') {
+  constructor(baseUrl = 'http://socialnetwork') {
     this.baseUrl = baseUrl
   }
 
