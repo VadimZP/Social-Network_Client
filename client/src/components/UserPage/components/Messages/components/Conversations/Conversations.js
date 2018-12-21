@@ -1,5 +1,4 @@
 import React, { Fragment } from 'react'
-import ListItem from '@material-ui/core/ListItem';
 import PropTypes from 'prop-types'
 
 import DialogContainer from './components/DialogContainer/DialogContainer'
@@ -33,7 +32,6 @@ function compare(a, b) {
     <Fragment>
       <ul className="conversations">
         {opts.sort(compare).map((item, i) => (
-          // <ListItem className="listItem" style={{ padding: 0 }} button>
             <Letter
               letter={item.slice(-1)[0]}
               msgId={item[0].receiver_id === userId ? item[0].sender_id : item[0].receiver_id}
@@ -41,17 +39,14 @@ function compare(a, b) {
               getDialogWithId={getDialogWithId}
               key={keys[i]}
             />
-          // </ListItem>
         ))}
       </ul>
-      {dialogContent.length ? (
+      {dialogContent.length && (
         <DialogContainer interlocutorId={interlocutorId}>
           {dialogContent.map(item => {
             return <Dialog key={item.id} {...item} />
           })}
         </DialogContainer>
-      ) : (
-          <p style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%', color: 'rgba(0, 0, 0, 0.75)' }}>Select a dialog</p>
       )}
     </Fragment>
   )
