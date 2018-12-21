@@ -38,6 +38,7 @@ class DialogContainer extends Component {
   }
 
   componentDidMount() {
+    console.log('kek')
     socket.on(
       this.props.userData.get('id'),
       ({ type, receiver_id, sender_id, text, sender_name, sender_surname, date }) => {
