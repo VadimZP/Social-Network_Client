@@ -34,7 +34,7 @@ class DialogContainer extends Component {
   state = {
     message: '',
     obj: {},
-    friends: this.props.friends 
+    friends: this.props.friends.toJS()
   }
 
   componentDidMount() {
@@ -46,7 +46,7 @@ class DialogContainer extends Component {
           const { interlocutorId } = this.props
           const { friends } = this.state
           // const removedFriend = friends.findIndex(user => user.get('id') == interlocutorId)
-          const newFriendsList = friends.toJS().filter(user => user.id !== interlocutorId)
+          const newFriendsList = friends.filter(user => user.id !== interlocutorId)
           console.log(friends)
           console.log(newFriendsList)
 
