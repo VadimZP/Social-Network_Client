@@ -33,7 +33,8 @@ class DialogContainer extends Component {
 
   state = {
     message: '',
-    obj: {} 
+    obj: {},
+    friendList: this.props.friends 
   }
 
   componentDidMount() {
@@ -41,7 +42,14 @@ class DialogContainer extends Component {
       this.props.userData.get('id'),
       ({ type, receiver_id, sender_id, text, sender_name, sender_surname, date }) => {
         if (type === 'removeFriend') {
-          this.setState({ notFriend: 'This user is not your friend' })
+          // this.setState({ notFriend: 'This user is not your friend' })
+          const { interlocutorId } = this.props
+          const { friendsLists } = this.state
+
+          const removedFriend = friendsLists.findIndex(user => user.get('id') == interlocutorId)
+          const newFriendsList = friendsLists.filter(user => user.get('id') != removedFriend)
+
+          this.setState({ friends: newFriendsList })
         }
         else if (type === 'message') {
           if (this.dialogContainerEl !== null) {
@@ -88,11 +96,12 @@ class DialogContainer extends Component {
   sendMessage = () => {
     const { interlocutorId, sendMessageRequested, friends } = this.props
     const { id, name, surname, avatar } = this.props.userData.toJS()
-    const { message } = this.state
+    const { message, friendsLists } = this.state
     const currentDate = moment().format('YYYY-MM-DD HH:mm:ss')
 
     this.setState({ message: '' })
-    if (this.state.notFriend) return
+    // if (this.state.notFriend) return
+
     if (!friends.toJS().find(user => user.id === interlocutorId)) {
       this.setState({ notFriend: 'This user is not your friend' })
       return
