@@ -38,10 +38,10 @@ class DialogContainer extends Component {
   }
 
   componentDidMount() {
-    const { interlocutorId } = this.props
+ /*    const { interlocutorId } = this.props
     const { friendList } = this.state
     console.log(friendList)
-    console.log(this.state.friendList.findIndex(user => user.get('id') == interlocutorId))
+    console.log(this.state.friendList.findIndex(user => user.get('id') == interlocutorId)) */
     socket.on(
       this.props.userData.get('id'),
       ({ type, receiver_id, sender_id, text, sender_name, sender_surname, date }) => {
