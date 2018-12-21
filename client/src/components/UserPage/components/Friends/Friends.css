@@ -39,11 +39,15 @@
 
 .person > a {
     margin-right: 50px;
+    display: flex;
+    align-items: center
 }
 
 .person .avatar{
     max-width: 96px;
     max-height: 96px;
+    margin-bottom: 0;
+    margin-right: 20px;
 }
 
 .person .button:not(:last-child) {
