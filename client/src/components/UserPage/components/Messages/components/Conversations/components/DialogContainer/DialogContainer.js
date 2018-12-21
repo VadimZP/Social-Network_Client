@@ -92,7 +92,7 @@ class DialogContainer extends Component {
     const currentDate = moment().format('YYYY-MM-DD HH:mm:ss')
 
     this.setState({ message: '' })
-
+    if (this.state.notFriend) return
     if (!friends.toJS().find(user => user.id === interlocutorId)) {
       this.setState({ notFriend: 'This user is not your friend' })
       return
