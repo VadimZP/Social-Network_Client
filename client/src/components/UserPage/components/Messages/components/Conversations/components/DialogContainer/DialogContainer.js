@@ -49,7 +49,6 @@ class DialogContainer extends Component {
           const newFriendsList = friends.filter(user => user.id !== interlocutorId)
           console.log(friends)
           console.log(newFriendsList)
-
           this.setState({ friends: newFriendsList })
         }
         else if (type === 'message') {
