@@ -129,6 +129,7 @@ class Messages extends Component {
                 className={classes.tabRoot}
                 onClick={() => {
                   this.props.onClick()
+                  this.setState({ unreadNotification: 0 })
                   history.push(`${match.url}/notifications`)
                   this.props.onClick
                 }} />

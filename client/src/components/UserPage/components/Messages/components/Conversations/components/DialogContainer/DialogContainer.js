@@ -40,28 +40,32 @@ class DialogContainer extends Component {
     socket.on(
       this.props.userData.get('id'),
       ({ type, receiver_id, sender_id, text, sender_name, sender_surname, date }) => {
-        console.log(type)
-        if (this.dialogContainerEl !== null) {
-          const dialogContainerId = this.dialogContainerEl.id
-
-          if (dialogContainerId === sender_id || dialogContainerId === receiver_id) {
-            const elem = (
-              <Dialog
-                key={uuid.v4()}
-                text={text}
-                sender_id={sender_id}
-                receiver_id={receiver_id}
-                sender_name={sender_name}
-                sender_surname={sender_surname}
-                date={date}
-              />
-            )
-             
-            this.setState(prevState => {
-              return prevState.obj[dialogContainerId] ? 
-                { obj: { ...prevState.obj, [dialogContainerId]: [...prevState.obj[dialogContainerId], elem] } } :
-                { obj: { ...prevState.obj, [dialogContainerId]: [elem] } }
-            })
+        if (type === 'removeFriend') {
+          this.setState({ notFriend: false })
+        }
+        else if (type === 'message') {
+          if (this.dialogContainerEl !== null) {
+            const dialogContainerId = this.dialogContainerEl.id
+  
+            if (dialogContainerId === sender_id || dialogContainerId === receiver_id) {
+              const elem = (
+                <Dialog
+                  key={uuid.v4()}
+                  text={text}
+                  sender_id={sender_id}
+                  receiver_id={receiver_id}
+                  sender_name={sender_name}
+                  sender_surname={sender_surname}
+                  date={date}
+                />
+              )
+               
+              this.setState(prevState => {
+                return prevState.obj[dialogContainerId] ? 
+                  { obj: { ...prevState.obj, [dialogContainerId]: [...prevState.obj[dialogContainerId], elem] } } :
+                  { obj: { ...prevState.obj, [dialogContainerId]: [elem] } }
+              })
+            }
           }
         }
       }

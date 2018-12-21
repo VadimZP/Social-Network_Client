@@ -44,8 +44,6 @@
 .person .avatar{
     max-width: 96px;
     max-height: 96px;
-    margin-right: 0;
-    margin-bottom: 10px;
 }
 
 .person .button:not(:last-child) {
