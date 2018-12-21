@@ -41,7 +41,7 @@ class DialogContainer extends Component {
       this.props.userData.get('id'),
       ({ type, receiver_id, sender_id, text, sender_name, sender_surname, date }) => {
         if (type === 'removeFriend') {
-          this.setState({ notFriend: false })
+          this.setState({ notFriend: 'This user is not your friend' })
         }
         else if (type === 'message') {
           if (this.dialogContainerEl !== null) {
