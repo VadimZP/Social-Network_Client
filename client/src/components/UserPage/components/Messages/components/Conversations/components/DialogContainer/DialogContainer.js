@@ -47,7 +47,7 @@ class DialogContainer extends Component {
           const { friends } = this.state
           const removedFriend = friends.findIndex(user => user.get('id') == interlocutorId)
           const newFriendsList = friends.filter(user => user.get('id') != removedFriend)
-          console.log(newFriendsList)
+          console.log(removedFriend)
 
           this.setState({ friends: newFriendsList })
         }
