@@ -39,14 +39,14 @@ class Notifications extends Component {
                   <Button id={uuid.v4()} variant="contained" type="button" onClick={(e) => {
                     acceptFriendshipRequested(sender_id, userId)
                     this.setState(prevState => {
-                      return { newNotifications: prevState.newNotifications.filter(item => item.id !== e.target.id) }
+                      return { newNotifications: prevState.newNotifications.filter(item => item.id !== e.currentTarget.id) }
                     })
                   }}>Accept</Button>
                   <Button id={uuid.v4()} variant="contained" type="button" onClick={(e) => {
                     rejectFriendshipRequested(sender_id, userId)
-                    console.log(e.currentTarget)
+                    // console.log(e.currentTarget)
                     this.setState(prevState => {
-                      return { newNotifications: prevState.newNotifications.filter(item => item.id !== e.target.id) }
+                      return { newNotifications: prevState.newNotifications.filter(item => item.id !== e.currentTarget.id) }
                     })
                   }}>Reject</Button>
                 </div>
