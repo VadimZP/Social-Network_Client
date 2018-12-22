@@ -36,17 +36,16 @@ class Notifications extends Component {
                   {text}
                 </div>
                 <div className="button-wrapper">
-                  <Button id={uuid.v4()} variant="contained" type="button" onClick={(e) => {
+                  <Button id={uuid.v4()} variant="contained" type="button" onClick={() => {
                     acceptFriendshipRequested(sender_id, userId)
                     this.setState(prevState => {
-                      return { newNotifications: prevState.newNotifications.filter(item => item.id !== e.currentTarget.id) }
+                      return { newNotifications: prevState.newNotifications.filter(item => item.id !== sender_id) }
                     })
                   }}>Accept</Button>
-                  <Button id={uuid.v4()} variant="contained" type="button" onClick={(e) => {
+                  <Button id={uuid.v4()} variant="contained" type="button" onClick={() => {
                     rejectFriendshipRequested(sender_id, userId)
-                    // console.log(e.currentTarget)
                     this.setState(prevState => {
-                      return { newNotifications: prevState.newNotifications.filter(item => item.id !== e.currentTarget.id) }
+                      return { newNotifications: prevState.newNotifications.filter(item => item.key !== sender_id) }
                     })
                   }}>Reject</Button>
                 </div>
