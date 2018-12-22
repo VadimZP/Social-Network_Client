@@ -68,7 +68,6 @@ class Home extends Component {
 
   render() {
     const { posts, userData, location, classes, openModal, addPostRequested } = this.props
-    // const { posts } = this.state
 
     const anotherProfile = location.state
 
@@ -153,19 +152,20 @@ class Home extends Component {
           />
         </header>
         <section id="posts">
-          <Button
-            type="button"
-            className={classes.button}
-            onClick={() => openModal(addPostRequested.bind(null, id, moment().format('YYYY-MM-DD HH:mm:ss')
-            ), true, 'Send')}
-          >
-            Write a post...
-                <CreateIcon color="primary" className={classes.createIcon} />
-          </Button>
+          {this.props.location.pathname.indexOf('profile-of') !== -1 || (
+            <Button
+              type="button"
+              className={classes.button}
+              onClick={() => openModal(addPostRequested.bind(null, id, moment().format('YYYY-MM-DD HH:mm:ss')
+              ), true, 'Send')}
+            >
+              Write a post...
+              <CreateIcon color="primary" className={classes.createIcon} />
+            </Button>
+        )}
           <ul className="post-list">
             {posts.toJS().map(item => {
-              console.log(item)
-              return <Post key={uuid.v4()} id={item.id} text={item.text} date={item.date} />
+              return <Post key={uuid.v4()} id={item.id} text={item.text} date={item.date} location={this.props.location} />
             })}
           </ul>
         </section>

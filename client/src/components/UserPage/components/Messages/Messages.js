@@ -122,7 +122,6 @@ class Messages extends Component {
                   history.push(`${match.url}/conversations`)
                   this.props.onClick
                 }} />
-                {/* {(unreadNotification !== 0) &&  <Badge badgeContent={unreadNotification} style={{ position: 'absolute', fontSize: 12, left: 17, }} color="secondary" />} */}
               <Tab 
                 icon={(unreadNotification !== 0) &&  <Badge badgeContent={unreadNotification} style={{ position: 'absolute', fontSize: 12, left: 17, }} color="secondary" />} 
                 label="Notifications"

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment'
 import uuid from 'uuid'
@@ -24,27 +24,31 @@ const styles = {
   }
 };
 
-function Post({ id, text, date, editPostRequested, deletePostRequested, openModal, classes }) {
+function Post({ id, text, date, location, editPostRequested, deletePostRequested, openModal, classes }) {
   return (
     <Card id={id} className={classes.card}>
       <CardContent>
-          <p className="post-text">{text}</p>
-          <span className="post-date">{date}</span>
+        <p className="post-text">{text}</p>
+        <span className="post-date">{date}</span>
       </CardContent>
       <CardActions>
-        <Button
-          size="small"
-          className={classes.button}
-          onClick={() => openModal(editPostRequested.bind(null, id, moment().format('YYYY-MM-DD HH:mm:ss')
-            ), true, 'Send')}>
-          Edit
-        </Button>
-        <Button
-          size="small"
-          className={classes.button}
-          onClick={() => deletePostRequested(id)}>
-          Remove
-        </Button>
+        {location.pathname.indexOf('profile-of') !== -1 || (
+          <Fragment>
+            <Button
+              size="small"
+              className={classes.button}
+              onClick={() => openModal(editPostRequested.bind(null, id, moment().format('YYYY-MM-DD HH:mm:ss')
+              ), true, 'Send')}>
+              Edit
+            </Button>
+            <Button
+              size="small"
+              className={classes.button}
+              onClick={() => deletePostRequested(id)}>
+              Remove
+            </Button>
+          </Fragment>
+        )}
       </CardActions>
     </Card>
   )

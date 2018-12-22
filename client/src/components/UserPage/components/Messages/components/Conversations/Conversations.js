@@ -41,11 +41,9 @@ function compare(a, b) {
             />
         ))}
       </ul>
-      {dialogContent.length && (
+      {!dialogContent.length || (
         <DialogContainer interlocutorId={interlocutorId}>
-          {dialogContent.map(item => {
-            return <Dialog key={item.id} {...item} />
-          })}
+          {dialogContent.map(item => <Dialog key={item.id} {...item} />)}
         </DialogContainer>
       )}
     </Fragment>

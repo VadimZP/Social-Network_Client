@@ -113,7 +113,9 @@ class UserPage extends Component {
         </aside>
         <div className="content-container" onScroll={this.handleScroll}>
           <Switch>
-            <Route path={`${match.url}/home`} component={Home} />
+            <Route path={`${match.url}/home`}
+              render={routeProps => <Home {...routeProps} />}
+            />
             <Route path={`${match.url}/friends`} component={Friends} />
             <Route path={`${match.url}/settings`} component={Settings} />
             <Route

@@ -30,10 +30,14 @@ class Notifications extends Component {
           if (notificationsContainerId === receiver_id) {
             const elem = (
               <li key={sender_id}>
-                <div className="avatar" style={{...avatarBg, width: 60, height: 60 }} />
-                {text}
-                <button type="button" onClick={() => acceptFriendshipRequested(sender_id, userId)}>Accept</button>
-                <button type="button" onClick={() => rejectFriendshipRequested(sender_id, userId)}>Reject</button>
+                <div className="wrapper" style={{ display: 'flex', alignItems: 'center' }}>
+                  <div className="avatar" style={{...avatarBg, width: 60, height: 60 }} />
+                  {text}
+                </div>
+                <div className="button-wrapper">
+                  <Button type="button" onClick={() => acceptFriendshipRequested(sender_id, userId)}>Accept</Button>
+                  <Button type="button" onClick={() => rejectFriendshipRequested(sender_id, userId)}>Reject</Button>
+                </div>
               </li>
             )
             this.setState(prevState => {
@@ -60,10 +64,14 @@ class Notifications extends Component {
 
             return (
               <li key={item.sender_id}>
-                <div className="avatar" style={{...avatarBg, width: 60, height: 60 }} />
-                {item.text}
-                <Button variant="contained" type="button" onClick={() => acceptFriendshipRequested(item.action_user_id, userId)}>Accept</Button>
-                <Button variant="contained" type="button" onClick={() => rejectFriendshipRequested(item.action_user_id, userId)}>Reject</Button>
+                <div className="wrapper" style={{ display: 'flex', alignItems: 'center' }}>
+                  <div className="avatar" style={{...avatarBg, width: 60, height: 60 }} />
+                  {item.text}
+                </div>
+                <div className="button-wrapper">
+                  <Button variant="contained" type="button" onClick={() => acceptFriendshipRequested(item.action_user_id, userId)}>Accept</Button>
+                  <Button variant="contained" type="button" onClick={() => rejectFriendshipRequested(item.action_user_id, userId)}>Reject</Button>
+                </div>
               </li>
             )
           })}

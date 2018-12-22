@@ -20,6 +20,7 @@
 
 .person {
     display: flex;
+    justify-content: space-between;
     padding: 20px;
     align-items: center;
     text-align: center;
@@ -47,7 +48,7 @@
     max-width: 96px;
     max-height: 96px;
     margin-bottom: 0;
-    margin-right: 20px;
+    margin-right: 50px;
 }
 
 .person .button:not(:last-child) {
@@ -60,9 +61,14 @@
     font-size: 15px;
 }
 
+.person .button-wrapper {
+    margin-right: 100px;
+}
+
 .your-friend {
     background: #cfcfcf;
     padding: 10px;
     color: #fff;
+    margin-right: 100px;
     border-radius: 3px;
 }

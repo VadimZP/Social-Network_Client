@@ -203,6 +203,7 @@ class Friends extends Component {
       if (friends.toJS().find(friend => friend.id === user.id)) {
         return (
           <Person user={user} key={user.id}>
+          <div className="button-wrapper">
             <Button
               type="button"
               className="button"
@@ -222,6 +223,7 @@ class Friends extends Component {
               Remove
               <DeleteIcon color="secondary" className={classes.rightIcon} /> 
             </Button>
+            </div>
           </Person>
         )
       }
@@ -233,14 +235,16 @@ class Friends extends Component {
       return (
         <Person user={user} key={user.id}>
           {!friends.toJS().find(friend => friend.id === user.id) ? (
-            <Button 
-              type="button"
-              className="button"
-              variant="contained"
-              onClick={() => openModal(sendFriendshipRequested.bind(null, id, user.id, avatar, `${name} ${surname} wants to be your friend`))}
-            >
-              Add to friends
-            </Button> 
+            <div className="button-wrapper">
+              <Button 
+                type="button"
+                className="button"
+                variant="contained"
+                onClick={() => openModal(sendFriendshipRequested.bind(null, id, user.id, avatar, `${name} ${surname} wants to be your friend`))}
+              >
+                Add to friends
+              </Button>
+            </div>
           ) : <h2 className="your-friend">Your friend</h2>}
         </Person>
       )
