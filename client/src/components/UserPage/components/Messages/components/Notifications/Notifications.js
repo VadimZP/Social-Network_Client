@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import io from 'socket.io-client'
+import uuid from 'uuid'
 import Button from '@material-ui/core/Button'
 
 import './Notifications.css'
@@ -35,8 +36,19 @@ class Notifications extends Component {
                   {text}
                 </div>
                 <div className="button-wrapper">
-                  <Button type="button" onClick={() => acceptFriendshipRequested(sender_id, userId)}>Accept</Button>
-                  <Button type="button" onClick={() => rejectFriendshipRequested(sender_id, userId)}>Reject</Button>
+                  <Button id={uuid.v4()} variant="contained" type="button" onClick={(e) => {
+                    rejectFriendshipRequested(sender_id, userId)
+                    console.log(e.target)
+                    this.setState(prevState => {
+                      return { newNotifications: prevState.newNotifications.filter(item => item.id !== e.target.id) }
+                    })
+                  }}>Reject</Button>
+                  <Button id={uuid.v4()} variant="contained" type="button" onClick={(e) => {
+                    acceptFriendshipRequested(sender_id, userId)
+                    this.setState(prevState => {
+                      return { newNotifications: prevState.newNotifications.filter(item => item.id !== e.target.id) }
+                    })
+                  }}>Accept</Button>
                 </div>
               </li>
             )
