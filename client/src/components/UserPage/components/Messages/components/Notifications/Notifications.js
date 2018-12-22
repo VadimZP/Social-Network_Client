@@ -32,23 +32,23 @@ class Notifications extends Component {
             const elem = (
               <li key={sender_id}>
                 <div className="wrapper" style={{ display: 'flex', alignItems: 'center' }}>
-                  <div className="avatar" style={{...avatarBg, width: 60, height: 60 }} />
+                  <div className="avatar" style={{ ...avatarBg, width: 60, height: 60 }} />
                   {text}
                 </div>
                 <div className="button-wrapper">
-                  <Button id={uuid.v4()} variant="contained" type="button" onClick={(e) => {
-                    rejectFriendshipRequested(sender_id, userId)
-                    console.log(e.target)
-                    this.setState(prevState => {
-                      return { newNotifications: prevState.newNotifications.filter(item => item.id !== e.target.id) }
-                    })
-                  }}>Reject</Button>
                   <Button id={uuid.v4()} variant="contained" type="button" onClick={(e) => {
                     acceptFriendshipRequested(sender_id, userId)
                     this.setState(prevState => {
                       return { newNotifications: prevState.newNotifications.filter(item => item.id !== e.target.id) }
                     })
                   }}>Accept</Button>
+                  <Button id={uuid.v4()} variant="contained" type="button" onClick={(e) => {
+                    rejectFriendshipRequested(sender_id, userId)
+                    console.log(e.currentTarget)
+                    this.setState(prevState => {
+                      return { newNotifications: prevState.newNotifications.filter(item => item.id !== e.target.id) }
+                    })
+                  }}>Reject</Button>
                 </div>
               </li>
             )
