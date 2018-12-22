@@ -39,7 +39,7 @@ class Notifications extends Component {
                   <Button id={uuid.v4()} variant="contained" type="button" onClick={() => {
                     acceptFriendshipRequested(sender_id, userId)
                     this.setState(prevState => {
-                      return { newNotifications: prevState.newNotifications.filter(item => item.id !== sender_id) }
+                      return { newNotifications: prevState.newNotifications.filter(item => item.key !== sender_id) }
                     })
                   }}>Accept</Button>
                   <Button id={uuid.v4()} variant="contained" type="button" onClick={() => {
